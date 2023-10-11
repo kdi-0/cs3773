@@ -1,6 +1,14 @@
 {
-  "extends": ["next/core-web-vitals", "next", "eslint:recommended"],
+  "extends": [
+    "next/core-web-vitals",
+    "next",
+    "eslint:recommended"
+  ],
   "globals": {
     "React": "readonly"
+  },
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off"
   }
 }
