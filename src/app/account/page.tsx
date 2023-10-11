@@ -4,7 +4,7 @@ async function getURL() {
   const url =
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:3000'
-      : headers().get('host');
+      : `https://${headers().get('host')}`;
   return url;
 }
 async function getUserDetails() {
