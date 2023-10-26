@@ -1,7 +1,9 @@
-export default async function Page() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      Hel
-    </main>
-  );
-}
+import React from 'react';
+import RegisterForm from './registerForm';
+type Props = {};
+
+const page = (props: Props) => {
+  return <RegisterForm />;
+};
+
+export default page;
