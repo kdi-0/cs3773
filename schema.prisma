@@ -1,0 +1,67 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    // url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
+    url      = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+    USER_ID       Int     @id @default(autoincrement())
+    USER_NAME     String
+    USER_EMAIL    String  @unique
+    USER_PASSWORD String
+    orders        Order[]
+}
+
+model Order {
+    ORDER_ID         Int             @id @default(autoincrement())
+    USER_ID          Int
+    ORDER_DATE       DateTime
+    IS_CURRENT_ORDER Boolean
+    product_orders   Product_Order[]
+    user             User            @relation(fields: [USER_ID], references: [USER_ID])
+}
+
+model Product_Order {
+    PRODUCT_ORDER_ID Int     @id @default(autoincrement())
+    ORDER_ID         Int
+    PRODUCT_ID       Int
+    ORDER_QUANTITY   Int
+    order            Order   @relation(fields: [ORDER_ID], references: [ORDER_ID])
+    product          Product @relation(fields: [PRODUCT_ID], references: [PRODUCT_ID])
+}
+
+model Product {
+    PRODUCT_ID          Int             @id @default(autoincrement())
+    PRODUCT_NAME        String
+    PRODUCT_CATEGORY    Int
+    PET_ID              Int
+    PRODUCT_PRICE       Float
+    PRODUCT_QUANTITY    Int
+    PRODUCT_DESCRIPTION String?
+    PRODUCT_IMAGE       String?
+    product_orders      Product_Order[]
+    category            Category        @relation(fields: [PRODUCT_CATEGORY], references: [CATEGORY_ID])
+    pet                 Pet             @relation(fields: [PET_ID], references: [PET_ID])
+}
+
+model Category {
+    CATEGORY_ID   Int       @id @default(autoincrement())
+    CATEGORY_NAME String
+    products      Product[]
+}
+
+model Pet {
+    PET_ID   Int       @id @default(autoincrement())
+    PET_NAME String
+    products Product[]
+}
+
+model Discount {
+    DISCOUNT_ID    Int    @id @default(autoincrement())
+    DISCOUNT_CODE  String
+    DISCOUNT_VALUE Float
+}

@@ -1,0 +1,13 @@
+{"level":"info","message":"POST /api/register [object Request]","service":"user-service"}
+{"level":"info","message":"POST /api/register [object Request]","service":"user-service"}
+{"level":"info","message":"POST /api/register [object ReadableStream]","service":"user-service"}
+{"level":"info","message":"POST /api/register [object Request]","service":"user-service"}
+{"level":"info","message":"POST /api/register [object Request]","service":"user-service"}
+{"level":"info","message":"POST /api/register function () { [native code] }","service":"user-service"}
+{"level":"info","message":"POST /api/register [object Headers]","service":"user-service"}
+{"level":"info","message":"POST /api/register [object ReadableStream]","service":"user-service"}
+{"level":"info","message":"POST /api/register function () { [native code] }","service":"user-service"}
+{"level":"info","message":"POST /api/register {\"name\":\"name\",\"email\":\"namington\",\"password\":\"name123\"}","service":"user-service"}
+{"level":"info","message":"POST /api/register [object Headers Iterator]","service":"user-service"}
+{"level":"info","message":"POST /api/register","service":"user-service"}
+{"level":"info","message":"POST /api/register","service":"user-service"}
