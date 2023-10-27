@@ -22,9 +22,11 @@ export async function POST(request: Request) {
       }
     });
     console.log(`Created: ${user}`);
+    return new NextResponse();
   } catch (e) {
     logging.error(e);
-  } finally {
     return new NextResponse();
+  } finally {
+    prisma.$disconnect();
   }
 }
