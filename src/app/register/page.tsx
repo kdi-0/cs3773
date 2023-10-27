@@ -1,8 +1,8 @@
 import React from 'react';
 import RegisterForm from './registerForm';
-type Props = {};
+// type Props = {};
 
-const page = (props: Props) => {
+const page = () => {
   return <RegisterForm />;
 };
 

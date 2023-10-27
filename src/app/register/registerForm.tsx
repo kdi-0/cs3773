@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-type Props = {};
+// type Props = {};
 
-const RegisterForm = (props: Props) => {
+const RegisterForm = () => {
   const [user, setUser] = useState({
     name: '',
     email: '',
