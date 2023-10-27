@@ -15,24 +15,21 @@ const RegisterForm = (props: Props) => {
 
   const router = useRouter();
 
-  const Register = () => {
+  const Register = async () => {
     const data = {
       name: user.name,
       email: user.email,
       password: user.password,
     };
 
-    axios
-      .post('/api/register', data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        router.push('/login');
-      });
+    try {
+      const response = await axios.post('/api/register', data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      router.push('/login');
+    }
   };
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
