@@ -1,14 +1,14 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
+//import { useRouter } from 'next/navigation';
+//import axios from 'axios';
 import { signIn } from 'next-auth/react';
 
-type Props = {};
+// type Props = {};
 
-const LoginForm = (props: Props) => {
-  const router = useRouter();
+const LoginForm = () => {
+  // const router = useRouter();
   const [user, setUser] = useState({
     email: '',
     password: '',
