@@ -4,8 +4,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-// type Props = {};
-
 const RegisterForm = () => {
   const [user, setUser] = useState({
     name: '',
@@ -14,8 +12,32 @@ const RegisterForm = () => {
   });
 
   const router = useRouter();
+  
+  const validateInput = (input: string, regex: RegExp) => {
+    return regex.test(input);
+  };
 
   const Register = async () => {
+    
+    const emailRegex = /^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+    const nameRegex = /^[a-zA-Z0-9_]{4,30}$/;
+    const passwordRegex = /^[a-zA-Z0-9_]{4,16}$/;
+
+    if (!validateInput(user.email, emailRegex)) {
+      alert('Invalid email. Please enter a valid email address.');
+      return;
+    }
+
+    if (!validateInput(user.name, nameRegex)) {
+      alert('Invalid name. Name should be between 4 and 30 characters.');
+      return;
+    }
+
+    if (!validateInput(user.password, passwordRegex)) {
+      alert('Invalid password. Password should be between 4 and 16 characters.');
+      return;
+    }
+
     const data = {
       name: user.name,
       email: user.email,
@@ -61,7 +83,7 @@ const RegisterForm = () => {
           Password
         </label>
         <input
-          type="text"
+          type="password"
           className="p-2 border-gray-300 border-[1px] rounded-lg w-[300px] mb-4 focus:outline-none focus:border-gray-600 text-black"
           id="password"
           value={user.password}

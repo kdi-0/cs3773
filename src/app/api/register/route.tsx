@@ -6,6 +6,7 @@ import { logger } from "@/logger";
 export async function POST(request: Request) {
   const logging = logger();
   logging.info(`POST /api/register`);
+  
   const prisma = new PrismaClient({
     log: ['query', 'info', 'warn', 'error'],
   });

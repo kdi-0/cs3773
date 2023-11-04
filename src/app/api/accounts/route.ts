@@ -1,10 +1,7 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-
+import prisma from '../../prismadb'
 export async function GET() {
-  const prisma = new PrismaClient({
-    log: ['query', 'info', 'warn', 'error'],
-  })
 
   // These are only to show how prisma could be used here. only for local testing 
   // const deletedUser = await prisma.user.delete({
