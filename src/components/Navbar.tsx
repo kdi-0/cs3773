@@ -12,7 +12,7 @@ const Navbar = (props: Props) => {
 
   return (
     <div>
-      <div className="flex items-center justify-between py-4 relative bg-green-500 px-5">
+      <div className="flex items-center justify-between py-4 relative bg-green-500 px-5 max-w-screen">
         <div className="flex items-center">
           <div className="font-semibold text-2xl">
             <a href="/">Critter Collectibles</a>
