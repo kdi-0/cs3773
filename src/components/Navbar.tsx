@@ -6,8 +6,8 @@ import { CiShoppingCart } from 'react-icons/ci';
 import { BsChevronCompactUp } from 'react-icons/bs';
 import { BiSearch } from 'react-icons/bi';
 type Props = {};
-const Navbar = (props: Props) => {
-  const [showProfile, setShowProfile] = useState<boolean>(false);
+const Navbar = () => {
+  //const [showProfile, setShowProfile] = useState<boolean>(false);
   const [showNav, setShowNav] = useState<boolean>(false);
 
   return (
