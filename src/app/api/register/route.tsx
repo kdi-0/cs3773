@@ -1,15 +1,12 @@
 import bcrypt from 'bcrypt';
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../prismadb"
 import { logger } from "@/logger";
 
 export async function POST(request: Request) {
   const logging = logger();
   logging.info(`POST /api/register`);
   
-  const prisma = new PrismaClient({
-    log: ['query', 'info', 'warn', 'error'],
-  });
   try {
     const body = await request.json();
     const { name, email, password } = await body;

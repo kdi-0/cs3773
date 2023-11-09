@@ -5,31 +5,41 @@ import Link from 'next/link';
 import { CiShoppingCart } from 'react-icons/ci';
 import { BsChevronCompactUp } from 'react-icons/bs';
 import { BiSearch } from 'react-icons/bi';
-import { useSession, signOut, signIn } from "next-auth/react"
+import { useSession, signOut, signIn } from 'next-auth/react';
 // type Props = {};
 const Navbar = () => {
   // const [showProfile, setShowProfile] = useState<boolean>(false);
-  const {data:session} = useSession()
-  console.log(session?.user)
+  const { data: session } = useSession();
+  console.log(session?.user);
   const [showNav, setShowNav] = useState<boolean>(false);
- 
+
   const SignOut = () => {
-    if(session && session.user) 
-    {
+    if (session && session.user) {
       return (
         <ul className="py-5 px-1 text-neutral-600">
-          <li className="hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer">{session.user.name}</li>
-          <li className="whitespace-nowrap hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer"><a href="/addproduct">Add Product</a></li>
-          <li onClick={() => signOut()} className="whitespace-nowrap hover:text-red-600 px-5 py-2 cursor-pointer">Sign Out</li>
+          <li className="hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer">
+            {session.user.name}
+          </li>
+          <li className="whitespace-nowrap hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer">
+            <a href="/addproduct">Add Product</a>
+          </li>
+          <li
+            onClick={() => signOut()}
+            className="whitespace-nowrap hover:text-red-600 px-5 py-2 cursor-pointer"
+          >
+            Sign Out
+          </li>
         </ul>
-      )
+      );
     }
     return (
       <ul>
-        <li className="whitespace-nowrap hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer"><Link href="/login">login</Link></li>
+        <li className="whitespace-nowrap hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer">
+          <Link href="/login">login</Link>
+        </li>
       </ul>
-    )
-  }
+    );
+  };
   return (
     <div>
       <div className="flex items-center justify-between py-4 relative bg-green-500 px-5">
@@ -49,12 +59,15 @@ const Navbar = () => {
                   Coupons
                 </a>
               </li>
-              {session?.user && (
+              {session?.user && session.user.role === 'admin' && (
                 <li>
-                <a href="myproducts" className="py-3 px-4 inline-block w-full">
-                  My Products
-                </a>
-              </li>
+                  <a
+                    href="/admin/addproduct"
+                    className="py-3 px-4 inline-block w-full"
+                  >
+                    Add Product
+                  </a>
+                </li>
               )}
             </ul>
           </nav>
@@ -67,7 +80,7 @@ const Navbar = () => {
               alt=""
             />
             <div className="absolute bg-white z-[2] rounded-lg shadow-lg">
-              <SignOut/>
+              <SignOut />
             </div>
           </div>
           <Link href="/cart">
@@ -80,15 +93,17 @@ const Navbar = () => {
             className="p-[9px] bg-gray-100 ronded-full md:hidden"
           >
             <BsChevronCompactUp
-              className={`transition ease-in duration-150 ${showNav ? 'rotate-180' : '0'
-                }`}
+              className={`transition ease-in duration-150 ${
+                showNav ? 'rotate-180' : '0'
+              }`}
             />
           </span>
         </div>
       </div>
       <div
-        className={`md:hidden ${showNav ? 'pb-4 px-5' : 'h-0 invisible opacity-0'
-          }`}
+        className={`md:hidden ${
+          showNav ? 'pb-4 px-5' : 'h-0 invisible opacity-0'
+        }`}
       >
         <ul className="flex flex-col text-[15px] opacity-75 px-2">
           <li>
