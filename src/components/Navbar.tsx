@@ -50,23 +50,23 @@ const Navbar = () => {
           <nav className="max-md:hidden ml-10">
             <ul className="flex items-center opacity-70 text-[15px]">
               <li>
-                <a href="/" className="py-3 px-4 inline-block w-full">
-                  Shop
-                </a>
+                <Link href="/aboutus" className="py-3 px-4 inline-block w-full">
+                  About Us
+                </Link>
               </li>
               <li>
-                <a href="/Coupons" className="py-3 px-4 inline-block w-full">
+                <Link href="/coupons" className="py-3 px-4 inline-block w-full">
                   Coupons
-                </a>
+                </Link>
               </li>
               {session?.user && session.user.role === 'admin' && (
                 <li>
-                  <a
-                    href="/admin/addproduct"
+                  <Link
+                    href="/admin"
                     className="py-3 px-4 inline-block w-full"
                   >
-                    Add Product
-                  </a>
+                    Admin Dashboard
+                  </Link>
                 </li>
               )}
             </ul>
