@@ -7,6 +7,7 @@ import Navbar from '../../../components/Navbar';
 import { useRouter } from 'next/navigation';
 import Para from "../../../components/Para"
 import UploadImage from '@/src/components/UploadImage';
+
 const ProductForm = () => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -16,7 +17,7 @@ const ProductForm = () => {
     category: '',
     images: '',
     price: 0,
-    quantity:0,
+    quantity: 0,
   });
 
   useEffect(() => {
@@ -24,9 +25,9 @@ const ProductForm = () => {
     console.log(formData)
   }, [formData])
 
-  
+
   const [info, updateInfo] = useState<any>()
-  const [imageUrls, setImageUrls ] = useState<string[]>([])
+  const [imageUrls, setImageUrls] = useState<string[]>([])
   const [description, setDescription] = useState<string>("")
   const postData = async () => {
     handleImageChange()
@@ -42,32 +43,32 @@ const ProductForm = () => {
     const stringImages = JSON.stringify(imageUrls)
     setFormData({
       ...formData,
-      images:stringImages,
-      description:description,
+      images: stringImages,
+      description: description,
     })
   }
-  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
-    const value = e.target.name === "price" ? parseInt(e.target.value):parseInt(e.target.value)
-    const quantity = e.target.name === "inventory" ? parseInt(e.target.value):parseInt(e.target.value)
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.name === "price" ? parseInt(e.target.value) : parseInt(e.target.value)
+    const quantity = e.target.name === "inventory" ? parseInt(e.target.value) : parseInt(e.target.value)
     setFormData({
       ...formData,
       [e.target.name]: value,
       [e.target.name]: quantity,
     })
-}
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
-      const {name, value} = e.target
-      setFormData({
-        ...formData,
-        [name]:value
-      })
+  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData({
+      ...formData,
+      [name]: value
+    })
   }
 
   useEffect(() => {
     setFormData((prevFormData) => ({
-       ...prevFormData,
-       description:description,
-       images:imageUrls.toString(),
+      ...prevFormData,
+      description: description,
+      images: imageUrls.toString(),
     }))
   }, [imageUrls])
 
@@ -77,12 +78,9 @@ const ProductForm = () => {
       description: description,
     }));
   }, [description]);
-  
+
   return (
-    <div className="px-5 max-w-[1280px] mx-auto mb-10">
-      <div>
-        <Navbar />
-      </div>
+    <div className="px-5 max-w mx-auto mb-10">
       <h1 className="text-3xl font-semibold py-6">Add product</h1>
       <div className="text-black mt-4">
         <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
@@ -136,10 +134,10 @@ const ProductForm = () => {
           </div>
         </div>
         <label htmlFor="" className="mt-10 inline-block font-medium">Description about the product</label>
-          <Para setDescription={setDescription} description={formData.description} />
-          <label htmlFor="" className="mt-10 inline-block font-medium">Upload images</label>
-          <UploadImage info={info} updateInfo={updateInfo} imageUrls={imageUrls} setImageUrls={setImageUrls} handleImageChange={handleImageChange}/>
-          <button onClick={postData} className="text-white mt-10 border-[1px] bg-purple-500 rounded-lg px-4 p-2">Submit</button>
+        <Para setDescription={setDescription} description={formData.description} />
+        <label htmlFor="" className="mt-10 inline-block font-medium">Upload images</label>
+        <UploadImage info={info} updateInfo={updateInfo} imageUrls={imageUrls} setImageUrls={setImageUrls} handleImageChange={handleImageChange} />
+        <button onClick={postData} className="text-white mt-10 border-[1px] bg-purple-500 rounded-lg px-4 p-2">Submit</button>
       </div>
     </div>
   );
