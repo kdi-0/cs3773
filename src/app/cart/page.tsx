@@ -1,13 +1,8 @@
-
+import GetCartItems from "@/src/components/GetCartItems";
 import Navbar from "../../components/Navbar";
-import CartItem from "@/src/components/CartItem";
-
-
 
 /*
-1) The new order will be created after checkout is done, so maybe store temporary order in json???
-2) display current items in order -> this is not user specific as the order is not official
-  2a) must get product info by selecting from prisma 
+1) The new order will be created after checkout is done. Cart items/products stored in localStorage in item called 'cart'
 
 const result = await prisma.Order.findUnique({
   where: { USER_ID: 1 },
@@ -27,19 +22,10 @@ const result = await prisma.Product.findUnique({
 })
 */
 
+// pages are server sided components (Ramin reference)
 
-export default async function Page() {
+export default function Page() {
 
- 
-    // const existingCartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    // const cartItem = {
-    //   id: 1,
-    //   name: 'Product Name',
-    //   price: 10.99,
-    // };
-    // existingCartItems.push(cartItem);
-    // // Store the updated cart in `localStorage`
-    // localStorage.setItem('cart', JSON.stringify(existingCartItems));
   
   return (
     <main>
@@ -55,6 +41,8 @@ export default async function Page() {
             </h2>
             <hr style={{width: 300}}></hr>
             <div>
+              <GetCartItems />
+
               <div className="text-left py-3 px-4 inline-block">
                 <img style={{width:50, height:100}} src="https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
               </div>
@@ -77,7 +65,6 @@ export default async function Page() {
               Order Summary
             </h3>
             <hr style={{width: 200}}></hr>
-            <CartItem />
             <div className="row">
               <div className="text-left py-3 px-4 inline-block">
                 <p className="text-left">Item 1</p>
