@@ -1,7 +1,6 @@
 import React from "react";
 import prisma from '@/src/app/prismadb';
 
-
 const BuildCartView = async(props) => {
     const items = [];
     const {existingCartItems} = props

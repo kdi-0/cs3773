@@ -38,7 +38,7 @@ const Item = async (props: Props) => {
                 ${product.PRODUCT_PRICE}.00
               </span>
             </Link>
-            <AddToCart product={{PRODUCT_ID: product.PRODUCT_ID, PRODUCT_QUANTITY: product.PRODUCT_QUANTITY}}/>
+            <AddToCart product={product}/>
           </div>
         ))}
       </div>
@@ -47,3 +47,5 @@ const Item = async (props: Props) => {
 };
 
 export default Item;
+
+          //  <AddToCart product={{PRODUCT_ID: product.PRODUCT_ID, PRODUCT_QUANTITY: product.PRODUCT_QUANTITY}}/>
