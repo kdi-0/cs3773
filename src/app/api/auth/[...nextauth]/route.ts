@@ -3,9 +3,10 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcrypt';
 import axios from 'axios';
 import prisma from '@/src/app/prismadb';
-import NextAuth from "next-auth"
+import NextAuth from 'next-auth';
+import { User } from '@prisma/client';
 export const authOptions: NextAuthOptions = {
-  providers:[
+  providers: [
     CredentialsProvider({
       name: 'credentials',
       credentials: {
@@ -21,7 +22,6 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Invalid credentials');
         }
@@ -43,35 +43,34 @@ export const authOptions: NextAuthOptions = {
 
         if (!isCorrectedPassword) {
           throw new Error('Invalid Credentials');
-        } 
+        }
+     
         const authorizedUser = {
-          id: user.USER_ID,
-          name: user.USER_NAME,
           email: user.USER_EMAIL,
-          USER_PASSWORD: user.USER_PASSWORD,
+          name: user.USER_NAME,
+          id: user.USER_ID,
+          role: user.ROLE,
         };
-
         return authorizedUser;
-
       },
     }),
   ],
   pages: {
-    signIn: "login",
+    signIn: 'login',
   },
   callbacks: {
-    session: async ({ session, token, user }) => {
+    session: async ({ session, token }) => {
       if (session?.user) {
-        session.user.id = token.uid as number;
+        session.user.role = token.ROLE;
       }
       return session;
     },
     jwt: async ({ user, token }) => {
       if (user) {
-        token.uid = user.id;
+        token.ROLE = user.role
       }
-      return token;
-    },
+      return token
+    }
   },
   session: {
     strategy: 'jwt',

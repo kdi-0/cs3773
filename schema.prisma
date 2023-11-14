@@ -13,6 +13,7 @@ model User {
     USER_NAME     String
     USER_EMAIL    String  @unique
     USER_PASSWORD String
+    ROLE          String  @default("user")
     orders        Order[]
 }
 
