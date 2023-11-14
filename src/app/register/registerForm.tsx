@@ -4,9 +4,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-type Props = {};
-
-const RegisterForm = (props: Props) => {
+const RegisterForm = () => {
   const [user, setUser] = useState({
     name: '',
     email: '',
@@ -14,25 +12,46 @@ const RegisterForm = (props: Props) => {
   });
 
   const router = useRouter();
+  
+  const validateInput = (input: string, regex: RegExp) => {
+    return regex.test(input);
+  };
 
-  const Register = () => {
+  const Register = async () => {
+    
+    const emailRegex = /^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+    const nameRegex = /^[a-zA-Z0-9_]{4,30}$/;
+    const passwordRegex = /^[a-zA-Z0-9_]{4,16}$/;
+
+    if (!validateInput(user.email, emailRegex)) {
+      alert('Invalid email. Please enter a valid email address.');
+      return;
+    }
+
+    if (!validateInput(user.name, nameRegex)) {
+      alert('Invalid name. Name should be between 4 and 30 characters.');
+      return;
+    }
+
+    if (!validateInput(user.password, passwordRegex)) {
+      alert('Invalid password. Password should be between 4 and 16 characters.');
+      return;
+    }
+
     const data = {
       name: user.name,
       email: user.email,
       password: user.password,
     };
 
-    axios
-      .post('/api/register', data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        router.push('/login');
-      });
+    try {
+      const response = await axios.post('/api/register', data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      router.push('/login');
+    }
   };
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -64,7 +83,7 @@ const RegisterForm = (props: Props) => {
           Password
         </label>
         <input
-          type="text"
+          type="password"
           className="p-2 border-gray-300 border-[1px] rounded-lg w-[300px] mb-4 focus:outline-none focus:border-gray-600 text-black"
           id="password"
           value={user.password}

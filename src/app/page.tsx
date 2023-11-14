@@ -1,13 +1,14 @@
 import Navbar from "../components/Navbar";
-import Advertisement from "../components/landing/Advertisement"
-import ItemList from "../components/landing/ItemList"
+import Items from "../components/Items";
+import { getCurrentUser } from "../lib/session"
 
-export default function Home() {
+export default async function Home() {
+  const user = await getCurrentUser()
+  console.log(user)
   return (
-    <div className="max-w-screen w-full min-h-screen">
+    <div className="p-4 max-w-[2000px] mx-auo">
       <Navbar/>
-        <Advertisement />
-        <ItemList />
+      <Items/>
     </div>
   );
 }
