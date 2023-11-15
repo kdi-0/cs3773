@@ -1,13 +1,17 @@
 'use client'
-import React from 'react';
+import React, {useState} from 'react';
 import BuildCartView from './BuildCartView';
 import axios from 'axios'
 import prisma from '@/src/app/prismadb';
-
+import { useRouter } from 'next/navigation';
+//the useRouter from the next/router is buggy as it is used for older versions of nextjs
 
 //you cannot make prisma queries nor async await in client side components
 
+
+
 const GetCartItems = async () => {
+  const router = useRouter()
   const existingCartItems = JSON.parse(localStorage.getItem('cart')) || [];
   console.log('Current cart: ', existingCartItems)
 
@@ -54,8 +58,27 @@ const GetCartItems = async () => {
         </div>
       );
     }
+    const [order_total_price, setOrderTotalPrice] = useState(0)
 
-    return items;
+  //upon clicking checkout button, navigate to the order page and pass the order total price as a prop
+    const handleClick = () => {
+      
+      // router.push({
+      //   pathname: '/order',
+      //   query: {order_total_price: order_total_price}
+      // })
+      router.push(`/order?order_total_price=${order_total_price}`)
+    }
+
+
+    return (
+      <div>
+        {items}
+        <button className="border font-semibold" onClick={handleClick}>Checkout</button>
+
+      </div>
+    
+      );
   
 
 

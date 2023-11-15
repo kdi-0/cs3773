@@ -1,15 +1,24 @@
+'use client'
 import GetCartItems from "@/src/components/GetCartItems";
 import Navbar from "../../components/Navbar";
-import React, {Suspense, useEffect} from 'react'
+import React, {Suspense, useEffect, useState} from 'react'
+import { useRouter } from 'next/router';
 
-/*
-1) The new order will be created after checkout is done. Cart items/products stored in localStorage in item called 'cart'
-
-*/
 
 // pages are server sided components (Ramin reference). Any useState, useEffect, and storage is client sided.
 
-export default async function Page() {
+export default function Page() {
+  
+//   const [order_total_price, setOrderTotalPrice] = useState(0)
+
+//  //upon clicking checkout button, navigate to the order page and pass the order total price as a prop
+//   const handleClick = () => {
+//     const router = useRouter()
+//     router.push({
+//       pathname: '/order',
+//       query: {order_total_price: order_total_price}
+//     })
+//   }
   
   // async function Callback(childData){
   //   // 'use server';
@@ -139,7 +148,6 @@ export default async function Page() {
                 </div>
               </div>
               <button className="border font-semibold text-s">Apply a Coupon</button>
-              <button className="border font-semibold">Checkout</button>
               </div>
               
             </div>
