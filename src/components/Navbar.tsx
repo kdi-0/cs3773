@@ -98,17 +98,15 @@ const Navbar = () => {
             className="p-[9px] bg-gray-100 ronded-full md:hidden"
           >
             <BsChevronCompactUp
-              className={`transition ease-in duration-150 ${
-                showNav ? 'rotate-180' : '0'
-              }`}
+              className={`transition ease-in duration-150 ${showNav ? 'rotate-180' : '0'
+                }`}
             />
           </span>
         </div>
       </div>
       <div
-        className={`md:hidden ${
-          showNav ? 'pb-4 px-5' : 'h-0 invisible opacity-0'
-        }`}
+        className={`md:hidden ${showNav ? 'pb-4 px-5' : 'h-0 invisible opacity-0'
+          }`}
       >
         <ul className="flex flex-col text-[15px] opacity-75 px-2">
           <li>
