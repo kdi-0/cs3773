@@ -4,11 +4,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-        
+
 const GetCartItems = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [order_total_price, setOrderTotalPrice] = useState(0)
 
   useEffect(() => {
     if (session?.user) {
@@ -28,20 +30,19 @@ const GetCartItems = () => {
   if (loading) {
     return <div>Loading cart items...</div>;
   }
-//the useRouter from the next/router is buggy as it is used for older versions of nextjs
+  //the useRouter from the next/router is buggy as it is used for older versions of nextjs
 
-//you cannot make prisma queries nor async await in client side components
-    const [order_total_price, setOrderTotalPrice] = useState(0)
+  //you cannot make prisma queries nor async await in client side components
 
   //upon clicking checkout button, navigate to the order page and pass the order total price as a prop
-    const handleClick = () => {
-      
-      // router.push({
-      //   pathname: '/order',
-      //   query: {order_total_price: order_total_price}
-      // })
-      router.push(`/order?order_total_price=${order_total_price}`)
-    }
+  const handleClick = () => {
+
+    // router.push({
+    //   pathname: '/order',
+    //   query: {order_total_price: order_total_price}
+    // })
+    router.push(`/order?order_total_price=${order_total_price}`)
+  }
 
   if (cartItems.length === 0) {
     return <div>No items in cart</div>;
@@ -63,7 +64,7 @@ const GetCartItems = () => {
           </div>
         </div>
       ))}
-     <button className="border font-semibold" onClick={handleClick}>Checkout</button>
+      <button className="border font-semibold" onClick={handleClick}>Checkout</button>
     </div>
   );
 };
