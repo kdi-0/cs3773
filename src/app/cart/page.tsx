@@ -1,14 +1,12 @@
+'use client'
 import GetCartItems from "@/src/components/GetCartItems";
 import Navbar from "../../components/Navbar";
-import React, { Suspense, useEffect } from 'react'
 import Link from 'next/link';
 import axios from 'axios';
 import { useSession, signOut, signIn } from 'next-auth/react';
+import React, {Suspense, useEffect, useState} from 'react'
+import { useRouter } from 'next/router';
 
-/*
-1) The new order will be created after checkout is done. Cart items/products stored in localStorage in item called 'cart'
-
-*/
 
 // pages are server sided components (Ramin reference). Any useState, useEffect, and storage is client sided.
 
@@ -85,8 +83,8 @@ export default async function Page() {
                 </div>
                 <button className="border font-semibold text-s">Apply a Coupon</button>
                 <button className="border font-semibold">Checkout</button>
+              <button className="border font-semibold text-s">Apply a Coupon</button>
               </div>
-
             </div>
           </div>
         </div>

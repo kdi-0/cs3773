@@ -21,6 +21,8 @@ model Order {
     ORDER_ID         Int             @id @default(autoincrement())
     USER_ID          Int
     ORDER_DATE       DateTime
+    ORDER_TOTAL_PRICE FLOAT8
+    ORDER_SHIPPING_ADDRESS String
     IS_CURRENT_ORDER Boolean
     product_orders   Product_Order[]
     user             User            @relation(fields: [USER_ID], references: [USER_ID])
