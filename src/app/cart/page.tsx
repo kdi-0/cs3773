@@ -29,24 +29,8 @@ export default async function Page() {
                 </h2>
                 <hr style={{ width: 300 }}></hr>
                 <div>
-
-                  <div>
-                    <GetCartItems />
-                  </div>
-
-                  <div className="text-left py-3 px-4 inline-block">
-                    <img style={{ width: 50, height: 100 }} src="https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
-                  </div>
-                  <div className="text-left py-3 px-4 inline-block">
-                    <p className="font-semibold text-xs">Name of Item</p>
-                    <p className="font-semibold text-xs">$45</p>
-                    <p className="text-xs">Quantity: 3</p>
-                  </div>
-                  <div className="text-s">
-                    <a>Remove</a>
-                  </div>
+                  <GetCartItems />
                 </div>
-
                 <hr style={{ width: 200 }}></hr>
               </div>
 

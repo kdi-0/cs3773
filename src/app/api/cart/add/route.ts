@@ -10,7 +10,6 @@ export async function POST(request: Request) {
         let userCart: string = await kv.get(userCartKey);
         let cartItems = [];
 
-        console.log("HERE");
         try {
             console.log(userCart);
             cartItems = JSON.parse(JSON.stringify(userCart));

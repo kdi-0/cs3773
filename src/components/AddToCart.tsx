@@ -12,8 +12,6 @@ const AddToCart = (props) => {
     return (
         <div>
             <button onClick={() => {
-                console.log("SENDING POST /api/cart/add with");
-                console.log(product);
                 axios.post('/api/cart/add', {
                     name: session.user.name,
                     email: session.user.email,
@@ -26,7 +24,6 @@ const AddToCart = (props) => {
                         'Content-Type': 'application/json'
                     }
                 }).then((response) => {
-                    console.log(response);
                 }).catch((error) => {
                     console.log("ERROR");
                     console.log(error);

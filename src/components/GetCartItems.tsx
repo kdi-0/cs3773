@@ -30,17 +30,14 @@ const GetCartItems = () => {
   if (cartItems.length === 0) {
     return <div>No items in cart</div>;
   }
-  console.log("Cart Items");
-  console.log(cartItems);
   return (
-    <div>
+    <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-20 gap-12">
       {cartItems.map((product, index) => (
         <div key={index}>
-          <p>Product Id: {product.PRODUCT_ID}</p>
-          <p>Product Name: {product.PRODUCT_NAME}</p>
-          <p>Unit Price: {product.PRODUCT_PRICE}</p>
-          <p>Quantity: {product.PRODUCT_QUANTITY}</p>
-          <p>Total Price: {parseFloat(product.PRODUCT_QUANTITY) * parseFloat(product.PRODUCT_PRICE)}</p>
+          <p className='text-lg'>Product Name: {product.PRODUCT_NAME}</p>
+          <p className='text-base'>Unit Price: ${product.PRODUCT_PRICE}</p>
+          <p className='text-base'>Quantity: {product.PRODUCT_QUANTITY}</p>
+          <p className='font-semibold text-lg'>Total Price: ${parseFloat(product.PRODUCT_QUANTITY) * parseFloat(product.PRODUCT_PRICE)}</p>
           <div className="relative rounded-lg">
             <img
               src={product.PRODUCT_IMAGE}
