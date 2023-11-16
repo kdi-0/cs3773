@@ -24,7 +24,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 export default function Page(props) {
   const router = useRouter()
   // get user's cart items, store user cart items in a separate table called cart. Each row could be a user id then a list of json objects (each json object has a product id and quantity), or each row represents a product (product id) and quantity with user_id as one of the primary keys.
-  try{
+  try{ //GET RID OF THIS WHERE getting order price through GET in URL b/c anybody could change the value in the URL to make their order cheaper.
+    //just do another query of user's  from kerwin's db instead
     // const order_total_price = props.router.query.order_total_price
     const searchParams = useSearchParams();
     const order_total_price = searchParams.get('order_total_price');

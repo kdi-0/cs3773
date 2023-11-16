@@ -5,14 +5,13 @@ const SearchBar = () => {
   const router = useRouter()
 
   function handleKeyPress(event) {
-      // Check if the pressed key is "Enter" (key code 13)
-      if (event.key === 'Enter') {
-        // Call your function here
-        console.log('pressed enter:', event.target.value)
-        router.push(`/products?product_name=${event.target.value}`)
-      }
+    // Check if the pressed key is "Enter" (key code 13)
+    if (event.key === 'Enter') {
+      // Call your function here
+      console.log('pressed enter:', event.target.value)
+      router.push(`/products?product_name=${event.target.value}`)
     }
-
+  }
 
   return (
     <div>

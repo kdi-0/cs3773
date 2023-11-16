@@ -4,13 +4,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import prisma from '@/src/app/prismadb';
 
 const GetCartItems = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [order_total_price, setOrderTotalPrice] = useState(0)
+  const [order_total_price, setOrderTotalPrice] = useState(0);
+  const [discountCode, setDiscountCode] = useState('');
 
   useEffect(() => {
     if (session?.user) {
@@ -31,22 +33,43 @@ const GetCartItems = () => {
     return <div>Loading cart items...</div>;
   }
   //the useRouter from the next/router is buggy as it is used for older versions of nextjs
-
   //you cannot make prisma queries nor async await in client side components
-
   //upon clicking checkout button, navigate to the order page and pass the order total price as a prop
-  const handleClick = () => {
 
-    // router.push({
-    //   pathname: '/order',
-    //   query: {order_total_price: order_total_price}
-    // })
-    router.push(`/order?order_total_price=${order_total_price}`)
+  const handleCheckoutClick = () => {
+    router.push(`/order?order_total_price=${order_total_price}`); //get rid of this
+  }
+
+  const handleDiscountInputChange = (event) => {
+    setDiscountCode(String(event.target.value));
+  }
+  
+  const handleDiscountClick = async () => {
+    console.log("Discount code:", discountCode);
+    if(discountCode.length != 0){ //there is a discount code trying to be applied
+      // see if discount code exists
+      const discount = await prisma.discount.findUnique({
+          where: {
+            DISCOUNT_CODE: discountCode
+          }
+        }
+      )
+      if(discount != null){
+        console.log("Discount code exists. Applying discount...");
+        setOrderTotalPrice(order_total_price - (order_total_price * (discount.DISCOUNT_VALUE/100)) ); //discount value is a whole number
+      }
+      else
+        console.log("ERROR: Discount does not exist");
+    }
+    else{
+      alert("ERROR: Must provide discount code");
+    }
   }
 
   if (cartItems.length === 0) {
     return <div>No items in cart</div>;
   }
+
   return (
     <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-20 gap-12">
       {cartItems.map((product, index) => (
@@ -64,7 +87,14 @@ const GetCartItems = () => {
           </div>
         </div>
       ))}
-      <button className="border font-semibold" onClick={handleClick}>Checkout</button>
+      <button className="border font-semibold" onClick={handleCheckoutClick}>Checkout</button>
+       <input
+          type="text"
+          onChange={handleDiscountInputChange}
+          maxLength={20}
+        />
+      <button className="border font-semibold" onClick={handleDiscountClick}>Apply Discount</button>
+      <p>Order total price: {order_total_price}</p>
     </div>
   );
 };
