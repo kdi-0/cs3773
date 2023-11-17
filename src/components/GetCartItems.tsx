@@ -16,7 +16,8 @@ const GetCartItems = () => {
 
   const [before_Tax_Order_total_price, setBeforeTaxOrderTotalPrice] = useState(0);
   
-  
+  const [order_total_price, setOrderTotalPrice] = useState(before_Tax_Order_total_price + (before_Tax_Order_total_price * .0825)); 
+
   //IMPORTANT NOTE, everytime a setState function is called, page has to 
   //rerender but those state variables are not reinitalized so between renders, they maintain their new value
 
@@ -29,6 +30,9 @@ const GetCartItems = () => {
         console.log("Response:", response);
         const res = JSON.parse(response.data);
         setBeforeTaxOrderTotalPrice(res.total_price); 
+
+        setOrderTotalPrice(res.total_price + res.total_price*0.0825);
+
         //IMPORTANT: set state functions are performed asynchronously so for this variable that is calculated by summing the costs for all of the products in the cart, this has to already be calculated before calling set() otherwise program will most likely set the value very late leading to slow response. Must calculate value in /api/cart/view as you wait until it is done then call set()
         setCartItems(res.userCart);
         setLoading(false);
@@ -74,12 +78,60 @@ const GetCartItems = () => {
               alt={`Product ${product.PRODUCT_ID}`}
             />
           </div>
-          <DeleteFromCart product={product} setCartItems={setCartItems} />
+          <DeleteFromCart product={product} setCartItems={setCartItems} before_Tax_Order_total_price={before_Tax_Order_total_price} setBeforeTaxOrderTotalPrice={setBeforeTaxOrderTotalPrice} setOrderTotalPrice={setOrderTotalPrice}/>
         </div>
       ))}
       <button className="border font-semibold" onClick={handleCheckoutClick}>Checkout</button>
-      <DiscountCode before_Tax_Order_total_price={before_Tax_Order_total_price} />
-      
+      <DiscountCode before_Tax_Order_total_price={before_Tax_Order_total_price} setOrderTotalPrice={setOrderTotalPrice} />
+
+      <div className="inline-block">
+      <div className="text-right py-3 px-4 inline-block border p-3 d-flex justify-content-end">
+        <h3 className={` text-center text-xl font-semibold`}>
+          Order Summary
+        </h3>
+        <hr style={{ width: 200 }}></hr>
+
+        {cartItems.map((product, index) => (
+        <div key={index}>
+          <div className="row">
+            <div className="text-left py-3 px-4 inline-block">
+              <p className="text-left">{product.PRODUCT_NAME} </p>
+            </div>
+            <div className="py-3 px-4 inline-block">
+              <p className="text-left">${product.PRODUCT_QUANTITY * product.PRODUCT_PRICE}</p>
+            </div>
+          </div>
+        </div>
+        ))}
+        
+        <hr style={{ width: 200 }}></hr>
+        <div className="row">
+          <div className="text-left py-3 px-4 inline-block">
+            <p className="text-left">Subtotal</p>
+          </div>
+          <div className="py-3 px-4 inline-block">
+            <p className="text-left">${before_Tax_Order_total_price}</p>
+          </div>
+        </div>
+        <div className="row">
+          <div className="text-left py-3 px-4 inline-block">
+            <p className="text-left">Taxes: 8.25%</p>
+          </div>
+          <div className="py-3 px-4 inline-block">
+            <p className="text-left">$32.78</p>
+          </div>
+        </div>
+        <hr style={{ width: 200 }}></hr>
+        <div className="row">
+          <div className="text-left py-3 px-4 inline-block">
+            <p className="font-semibold text-left">Order Total</p>
+          </div>
+          <div className="py-3 px-4 inline-block">
+            <p className="font-semibold text-left">${order_total_price}</p>
+          </div>
+        </div>
+      </div>
+      </div>
     </div>
   );
 };

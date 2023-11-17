@@ -32,7 +32,7 @@ export default function Page() {
                 <hr style={{ width: 200 }}></hr>
               </div>
 
-              <div className="inline-block">
+              {/* <div className="inline-block">
                 <div className="text-right py-3 px-4 inline-block border p-3 d-flex justify-content-end">
                   <h3 className={` text-center text-xl font-semibold`}>
                     Order Summary
@@ -81,7 +81,7 @@ export default function Page() {
                     </div>
                   </div>
                 </div>
-               </div>
+               </div> */}
             </div>
           </div>
         </div>

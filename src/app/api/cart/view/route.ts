@@ -18,13 +18,13 @@ export async function POST(request: Request) {
         if (userCart) {
             let i=0;
             let sum=0;
-            // for(i=0; i<userCart.length; i++){  //for loop seems to be slowing down app
-            //  sum += userCart[i].PRODUCT_QUANTITY * userCart[i].PRODUCT_PRICE;
-            // }
-            // const ret = {
-            //     userCart: userCart,
-            //     total_price: sum
-            // }
+            for(i=0; i<userCart.length; i++){  //for loop seems to be slowing down app
+             sum += userCart[i].PRODUCT_QUANTITY * userCart[i].PRODUCT_PRICE;
+            }
+            const ret = {
+                userCart: userCart,
+                total_price: sum
+            }
             return NextResponse.json(JSON.stringify(ret));
         } else {
             return NextResponse.json({});

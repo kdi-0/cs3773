@@ -24,11 +24,14 @@ export async function POST(request: Request) {
 
         let indexToRemove = -1;
         let i=0;
+        let newCartCost = 0; //get new sum for cart 
         //loop through cart items and remove the product from the cart items list then reassign updated cart to vercel db
         for(i=0; i<cartItems.length; i++){
+            
             if(cartItems[i].PRODUCT_ID === requestBody.PRODUCT_ID){
                 try{
                     indexToRemove = i;
+                    newCartCost = requestBody.oldCartCost - userCart[i].PRODUCT_QUANTITY * userCart[i].PRODUCT_PRICE; 
                     break;
                 }
                 catch{
@@ -47,7 +50,7 @@ export async function POST(request: Request) {
         console.log("Updated cart: ", cartItems);
         await kv.set(userCartKey, JSON.stringify(cartItems));
 
-        return NextResponse.json(cartItems);
+        return NextResponse.json({cartItems, newCartCost});
     } catch (e) {
         console.error(e);
         return NextResponse.json({ error: "Server side error occured." });

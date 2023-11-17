@@ -4,7 +4,7 @@ import React, { useEffect, useState, } from 'react';
 import axios from 'axios';
 import { json } from 'stream/consumers';
 
-const DiscountCode = ({before_Tax_Order_total_price}) => {
+const DiscountCode = ({before_Tax_Order_total_price, setOrderTotalPrice}) => {
 
   const [discountCode, setDiscountCode] = useState('');
   const [appliedDiscountCodes, setAppliedDiscountCodes] = useState([]);
@@ -12,7 +12,7 @@ const DiscountCode = ({before_Tax_Order_total_price}) => {
   // discountPercent used for stacking coupons (ex: 10% and 5% should take 15% from the cost before any tax)
 
   //total cost with tax
-  const [order_total_price, setOrderTotalPrice] = useState(before_Tax_Order_total_price + (before_Tax_Order_total_price * .0825)); 
+  // const [order_total_price, setOrderTotalPrice] = useState(before_Tax_Order_total_price + (before_Tax_Order_total_price * .0825)); 
   
   const handleDiscountInputChange = (event) => {
     setDiscountCode(String(event.target.value));
@@ -80,7 +80,7 @@ const DiscountCode = ({before_Tax_Order_total_price}) => {
         />
       <button className="border font-semibold" onClick={handleDiscountClick}>Apply Discount</button>
       <div>
-        <p>Order Total Price: ${order_total_price}</p>
+        {/* <p>Order Total Price: ${order_total_price}</p> */}
       </div>
     </div>
   );
