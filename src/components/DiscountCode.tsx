@@ -1,12 +1,19 @@
 'use client'
 
-import React, { useState, } from 'react';
+import React, { useEffect, useState, } from 'react';
 import axios from 'axios';
+import { json } from 'stream/consumers';
 
-const DiscountCode = ({order_total_price, setOrderTotalPrice}) => {
+const DiscountCode = ({before_Tax_Order_total_price}) => {
+
   const [discountCode, setDiscountCode] = useState('');
   const [appliedDiscountCodes, setAppliedDiscountCodes] = useState([]);
+  const [discountPercent, setDiscountPercent] = useState(0); 
+  // discountPercent used for stacking coupons (ex: 10% and 5% should take 15% from the cost before any tax)
 
+  //total cost with tax
+  const [order_total_price, setOrderTotalPrice] = useState(before_Tax_Order_total_price + (before_Tax_Order_total_price * .0825)); 
+  
   const handleDiscountInputChange = (event) => {
     setDiscountCode(String(event.target.value));
     console.log("Discount code: ", discountCode);
@@ -25,9 +32,24 @@ const DiscountCode = ({order_total_price, setOrderTotalPrice}) => {
         //discount exists AND hasnt been applied already, apply discount to order total price
         if(discountResponse.data.discountExists == true && 
           !appliedDiscountCodes.includes(discountResponse.data.discountCode) ) {
-          setOrderTotalPrice(order_total_price - (order_total_price * (discountResponse.data.discountValue/100)));
+          let discountResPercent=discountPercent + discountResponse.data.discountValue;
+          let discountAmount = before_Tax_Order_total_price * (discountResPercent/100);
+    
+          if(discountAmount > before_Tax_Order_total_price)
+            discountAmount= before_Tax_Order_total_price; // order should be free
+
+          let price_with_discount =  before_Tax_Order_total_price - discountAmount;
+          //apply sales tax after discount is applied
+          let taxCost = price_with_discount*0.0825;
+           
           appliedDiscountCodes.push(discountResponse.data.discountCode); //add this coupon to the already used coupons array
-          setAppliedDiscountCodes(appliedDiscountCodes);
+          
+          //do not immediately set these state variables earlier b/c they are updated asynchronously so save them for after operations are done
+          setOrderTotalPrice(price_with_discount+taxCost);  
+          setAppliedDiscountCodes(appliedDiscountCodes); 
+          setDiscountPercent(discountResPercent);
+          console.log("Discount percent: ", discountResPercent);
+
           alert("Successfully applied discount code");
         }
         else if(appliedDiscountCodes.includes(discountResponse.data.discountCode)){
@@ -57,6 +79,9 @@ const DiscountCode = ({order_total_price, setOrderTotalPrice}) => {
           maxLength={20}
         />
       <button className="border font-semibold" onClick={handleDiscountClick}>Apply Discount</button>
+      <div>
+        <p>Order Total Price: ${order_total_price}</p>
+      </div>
     </div>
   );
 };

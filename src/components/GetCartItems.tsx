@@ -7,12 +7,18 @@ import { useRouter } from 'next/navigation';
 import DeleteFromCart from './DeleteFromCart';
 import DiscountCode from './DiscountCode';
 
+
 const GetCartItems = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [order_total_price, setOrderTotalPrice] = useState(10);
+
+  const [before_Tax_Order_total_price, setBeforeTaxOrderTotalPrice] = useState(0);
+  
+  
+  //IMPORTANT NOTE, everytime a setState function is called, page has to 
+  //rerender but those state variables are not reinitalized so between renders, they maintain their new value
 
   useEffect(() => {
     if (session?.user) {
@@ -20,7 +26,11 @@ const GetCartItems = () => {
         name: session.user.name,
         email: session.user.email
       }).then((response) => {
-        setCartItems(JSON.parse(response.data));
+        console.log("Response:", response);
+        const res = JSON.parse(response.data);
+        setBeforeTaxOrderTotalPrice(res.total_price); 
+        //IMPORTANT: set state functions are performed asynchronously so for this variable that is calculated by summing the costs for all of the products in the cart, this has to already be calculated before calling set() otherwise program will most likely set the value very late leading to slow response. Must calculate value in /api/cart/view as you wait until it is done then call set()
+        setCartItems(res.userCart);
         setLoading(false);
       }).catch((error) => {
         console.log(error);
@@ -32,17 +42,22 @@ const GetCartItems = () => {
   if (loading) {
     return <div>Loading cart items...</div>;
   }
+
+
   //the useRouter from the next/router is buggy as it is used for older versions of nextjs
   //you cannot make prisma queries nor async await in client side components. Instead make queries in a api route and call with axios
   //upon clicking checkout button, navigate to the order page 
 
   const handleCheckoutClick = () => {
-    router.push(`/order?order_total_price=${order_total_price}`); //get rid of this
+    // router.push(`/order?order_total_price=${order_total_price}`); //get rid of this
+    router.push(`/order`);
   }
+  
 
   if (cartItems.length === 0) {
     return <div>No items in cart</div>;
   }
+
 
   return (
     <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-20 gap-12">
@@ -63,10 +78,11 @@ const GetCartItems = () => {
         </div>
       ))}
       <button className="border font-semibold" onClick={handleCheckoutClick}>Checkout</button>
-      <DiscountCode order_total_price={order_total_price} setOrderTotalPrice={setOrderTotalPrice}/>
-      <p>Order Total Price: {order_total_price}</p>
+      <DiscountCode before_Tax_Order_total_price={before_Tax_Order_total_price} />
+      
     </div>
   );
 };
+
 
 export default GetCartItems;
