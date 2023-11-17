@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import DeleteFromCart from './DeleteFromCart';
 
 const GetCartItems = () => {
   const router = useRouter();
@@ -45,6 +46,7 @@ const GetCartItems = () => {
     console.log("Discount code: ", discountCode);
   }
   
+  // discount code main function
   const handleDiscountClick = async () => {
     console.log("Discount code:", discountCode);
     if(discountCode.length != 0){ //there is a discount code trying to be applied
@@ -98,6 +100,7 @@ const GetCartItems = () => {
               alt={`Product ${product.PRODUCT_ID}`}
             />
           </div>
+          <DeleteFromCart product={product} setCartItems={setCartItems} />
         </div>
       ))}
       <button className="border font-semibold" onClick={handleCheckoutClick}>Checkout</button>
