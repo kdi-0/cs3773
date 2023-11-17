@@ -1,14 +1,13 @@
 'use client'
 
-import React, { useEffect, useState, } from 'react';
+import React, { useState, } from 'react';
 import axios from 'axios';
-import { json } from 'stream/consumers';
 
-const DiscountCode = ({before_Tax_Order_total_price, setOrderTotalPrice}) => {
+const DiscountCode = ({before_Tax_Order_total_price, setOrderTotalPrice, discountPercent, setDiscountPercent}) => {
 
   const [discountCode, setDiscountCode] = useState('');
   const [appliedDiscountCodes, setAppliedDiscountCodes] = useState([]);
-  const [discountPercent, setDiscountPercent] = useState(0); 
+  // const [discountPercent, setDiscountPercent] = useState(0); 
   // discountPercent used for stacking coupons (ex: 10% and 5% should take 15% from the cost before any tax)
 
   //total cost with tax
@@ -45,7 +44,7 @@ const DiscountCode = ({before_Tax_Order_total_price, setOrderTotalPrice}) => {
           appliedDiscountCodes.push(discountResponse.data.discountCode); //add this coupon to the already used coupons array
           
           //do not immediately set these state variables earlier b/c they are updated asynchronously so save them for after operations are done
-          setOrderTotalPrice(price_with_discount+taxCost);  
+          setOrderTotalPrice((price_with_discount+taxCost).toFixed(2));  
           setAppliedDiscountCodes(appliedDiscountCodes); 
           setDiscountPercent(discountResPercent);
           console.log("Discount percent: ", discountResPercent);
@@ -80,7 +79,6 @@ const DiscountCode = ({before_Tax_Order_total_price, setOrderTotalPrice}) => {
         />
       <button className="border font-semibold" onClick={handleDiscountClick}>Apply Discount</button>
       <div>
-        {/* <p>Order Total Price: ${order_total_price}</p> */}
       </div>
     </div>
   );

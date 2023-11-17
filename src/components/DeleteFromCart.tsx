@@ -4,7 +4,7 @@ import React from 'react';
 import { useSession } from 'next-auth/react';
 
 const DeleteFromCart = ({product, setCartItems, before_Tax_Order_total_price, setBeforeTaxOrderTotalPrice,
-    setOrderTotalPrice}) => {
+    setOrderTotalPrice, discountPercent}) => {
 
     const { data: session } = useSession();
 
@@ -23,9 +23,10 @@ const DeleteFromCart = ({product, setCartItems, before_Tax_Order_total_price, se
                 }).then((response) => {
                     console.log("New cart cost after removal: ", response.data.newCartCost);
                     setBeforeTaxOrderTotalPrice(response.data.newCartCost)//update raw cost of cart now with the product removed
-                    setOrderTotalPrice(response.data.newCartCost + (response.data.newCartCost*0.0825)); //update final cost too
+                    setOrderTotalPrice((((response.data.newCartCost-
+                        (response.data.newCartCost*(discountPercent/100)))) + ((response.data.newCartCost-
+                        (response.data.newCartCost*(discountPercent/100)))*0.0825)).toFixed(2)); //update final cost too
                     setCartItems(response.data.cartItems);//update state of cart after removing product from cart
-                    
                 }).catch((error) => {
                     console.log("ERROR");
                     console.log(error);

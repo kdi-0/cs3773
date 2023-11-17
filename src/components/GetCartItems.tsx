@@ -16,7 +16,11 @@ const GetCartItems = () => {
 
   const [before_Tax_Order_total_price, setBeforeTaxOrderTotalPrice] = useState(0);
   
+  //order_total_price is final cost of order with coupon and taxes
   const [order_total_price, setOrderTotalPrice] = useState(before_Tax_Order_total_price + (before_Tax_Order_total_price * .0825)); 
+
+  const [discountPercent, setDiscountPercent] = useState(0); 
+  // discountPercent used for stacking coupons (ex: 10% and 5% should take 15% from the cost before any tax)
 
   //IMPORTANT NOTE, everytime a setState function is called, page has to 
   //rerender but those state variables are not reinitalized so between renders, they maintain their new value
@@ -31,7 +35,7 @@ const GetCartItems = () => {
         const res = JSON.parse(response.data);
         setBeforeTaxOrderTotalPrice(res.total_price); 
 
-        setOrderTotalPrice(res.total_price + res.total_price*0.0825);
+        setOrderTotalPrice((res.total_price + res.total_price*0.0825).toFixed(2));
 
         //IMPORTANT: set state functions are performed asynchronously so for this variable that is calculated by summing the costs for all of the products in the cart, this has to already be calculated before calling set() otherwise program will most likely set the value very late leading to slow response. Must calculate value in /api/cart/view as you wait until it is done then call set()
         setCartItems(res.userCart);
@@ -78,11 +82,12 @@ const GetCartItems = () => {
               alt={`Product ${product.PRODUCT_ID}`}
             />
           </div>
-          <DeleteFromCart product={product} setCartItems={setCartItems} before_Tax_Order_total_price={before_Tax_Order_total_price} setBeforeTaxOrderTotalPrice={setBeforeTaxOrderTotalPrice} setOrderTotalPrice={setOrderTotalPrice}/>
+          <DeleteFromCart product={product} setCartItems={setCartItems} before_Tax_Order_total_price={before_Tax_Order_total_price} setBeforeTaxOrderTotalPrice={setBeforeTaxOrderTotalPrice} setOrderTotalPrice={setOrderTotalPrice} discountPercent={discountPercent}/>
         </div>
       ))}
       <button className="border font-semibold" onClick={handleCheckoutClick}>Checkout</button>
-      <DiscountCode before_Tax_Order_total_price={before_Tax_Order_total_price} setOrderTotalPrice={setOrderTotalPrice} />
+      <DiscountCode before_Tax_Order_total_price={before_Tax_Order_total_price} setOrderTotalPrice={setOrderTotalPrice} 
+        discountPercent={discountPercent} setDiscountPercent={setDiscountPercent}/>
 
       <div className="inline-block">
       <div className="text-right py-3 px-4 inline-block border p-3 d-flex justify-content-end">
@@ -115,10 +120,13 @@ const GetCartItems = () => {
         </div>
         <div className="row">
           <div className="text-left py-3 px-4 inline-block">
-            <p className="text-left">Taxes: 8.25%</p>
+            <p className="text-left">Discount Percent: {discountPercent}% | -${(before_Tax_Order_total_price*(discountPercent/100)).toFixed(2)}</p>
           </div>
-          <div className="py-3 px-4 inline-block">
-            <p className="text-left">$32.78</p>
+        </div>
+        <div className="row">
+          <div className="text-left py-3 px-4 inline-block">
+            <p className="text-left">Taxes: 8.25% | +${((before_Tax_Order_total_price-
+                        (before_Tax_Order_total_price*(discountPercent/100)))*0.0825).toFixed(2)}</p>
           </div>
         </div>
         <hr style={{ width: 200 }}></hr>
