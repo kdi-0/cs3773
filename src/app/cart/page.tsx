@@ -81,10 +81,7 @@ export default function Page() {
                     </div>
                   </div>
                 </div>
-                <button className="border font-semibold text-s">Apply a Coupon</button>
-                <button className="border font-semibold">Checkout</button>
-                <button className="border font-semibold text-s">Apply a Coupon</button>
-              </div>
+               </div>
             </div>
           </div>
         </div>
