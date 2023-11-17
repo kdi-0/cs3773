@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { kv } from '@vercel/kv';
+
+//remove product from cart while on cart page
 export async function POST(request: Request) {
     console.log("/api/cart/delete")
     try {
