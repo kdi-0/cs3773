@@ -1,15 +1,9 @@
-import Item from '../../model/Item'
 import axios from 'axios'
 import Link from 'next/link';
 import prisma from '@/src/app/prismadb';
+import AddToCart from '@/src/components/AddToCart'
 
-function ItemList() {
-
-    const items = [
-        new Item(1, 'Item 1', 10, 5, ""),
-        new Item(2, 'Item 2', 15, 2.5, ""),
-
-    ]
+async function ItemList() {
 
     const products = await prisma.product.findMany();
     //console.log(products[0]?.PRODUCT_IMAGE?.split(',')[0]);
@@ -17,14 +11,22 @@ function ItemList() {
         return <div>No items</div>;
     }
 
+    const firstProducts = products.slice(0, 4)
+
+    const style = {
+        h1: {
+            fontSize: '2.0rem',
+            margin: '0.5rem',
+        },
+    }
+
     return (
         <>
-            <h1>Featured Items</h1>
+            <h1 style={style.h1}>Featured Items</h1>
             <div>
                 <div>
-                    <h1 className="py-3 text-xl">Items</h1>
                     <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-20 gap-12 ">
-                        {products.map((product) => (
+                        {firstProducts.map((product) => (
                             <div key={product.PRODUCT_ID}>
                                 <Link href={`/dashboard/${product.PRODUCT_ID}`}>
                                     <div className="relative rounded-lg">
