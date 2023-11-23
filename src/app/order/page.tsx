@@ -48,7 +48,7 @@ export default function Page() {
 
   return (
     <div>
-      <OrderForm cartItems={cartItems}/>
+      <OrderForm cartItems={cartItems} userEmail={session.user.email} order_total_price={order_total_price}/>
     </div>
   );
 };

@@ -4,28 +4,11 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 
-// const create_order = async(product_orders) => {
-//     try{
-//         await prisma.order.create({
-//           data: {
-//             USER_ID: 1,
-//             ORDER_DATE: new Date(),
-//             product_orders: product_orders,
-//             ORDER_TOTAL_PRICE: 33.45,
-//             ORDER_SHIPPING_ADDRESS: '3333 street, state, zip',
-//             IS_CURRENT_ORDER: true
-//           },
-//         })
-//     }
-//     catch{
-//       alert("ERROR creating order")
-//     }
-// }
-
-export default function OrderForm({cartItems}) {
+export default function OrderForm({cartItems, userEmail, order_total_price}) {
     const router = useRouter();
+    // console.log("Test", cartItems, userEmail, order_total_price);
 
-    console.log("Cart items from Order Form:" , cartItems);
+    // console.log("Cart items from Order Form:" , cartItems);
     const [formData, setFormData] = useState({
         name: '',
         street_address: '',
@@ -52,31 +35,33 @@ export default function OrderForm({cartItems}) {
 
         // Check if any field is empty and have 100 character limit for fields before submitting
         if (Object.values(formData).every((value) => (value.trim() !== '' && value.length < 100))) {
-            console.log("Form data: ", formData);
             try{
-                // concatenate  street address, city, state, zip code together 
-                // separated by commas and place in ORDER_SHIPPING_ADDRESS
-                const ORDER_SHIPPING_ADDRESS = formData.street_address + "," + formData.city + "," + formData.state + "," + formData.zip_code;
-                
                 //create order and add products to order
                 //create_order(products_orders)
-                
-
-
-                //add products in user's cart to order -> (maybe dont use ProductOrder table b/c prisma tables can hold list of json objects)
-
+                await axios.post('/api/order/CreateOrder', {
+                    userEmail: userEmail,
+                    formData: formData,
+                    cartItems: cartItems,
+                    order_total_price: order_total_price
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then((response) => {
+                    console.log("Order created with query");
+                }).catch((error) => {
+                    console.log(error);
+                });
 
                 //remove items in user's cart
 
 
-
-                console.log('Form submitted:', formData);
                 
                 // router.push('/'); // navigate user to home page upon successful order creation
-                alert('Order successfully created');
+                alert('Order successfully placed');
             }
             catch{
-
+                console.log("ERROR: Problem occurred when submitting order form");
             }
     } else {
       alert('Please fill in all fields before submitting and make sure fields are less than 100 characters');
@@ -87,7 +72,7 @@ export default function OrderForm({cartItems}) {
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-          Street Address:
+          First and Last Name:
           <input
             type="text"
             name="name"
