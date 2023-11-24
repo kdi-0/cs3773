@@ -4,9 +4,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 
-export default function OrderForm({cartItems, userEmail, order_total_price, setCartItems}) {
+export default function OrderForm({cartItems, userEmail, setCartItems}) {
     const router = useRouter();
-    // console.log("Test", cartItems, userEmail, order_total_price);
+    // console.log("Test", cartItems, userEmail);
 
     // console.log("Cart items from Order Form:" , cartItems);
     const [formData, setFormData] = useState({
@@ -41,6 +41,21 @@ export default function OrderForm({cartItems, userEmail, order_total_price, setC
             if (Object.values(formData).every((value) => (value.trim() !== '' && value.length < 100))) 
             {
                 try{
+                    //get order total price
+                    let order_total_price = 0;
+                    await axios.post('/api/order/getOrderTotalPrice', {
+                        email: userEmail,
+                    }, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((response) => {
+                        console.log("Response: ", response);
+                        order_total_price = parseFloat(response.data.orderTotalPrice.orderTotalPrice);
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+
                     //queries to order table in prisma (creates order)
                     await axios.post('/api/order/CreateOrder', {
                         userEmail: userEmail,

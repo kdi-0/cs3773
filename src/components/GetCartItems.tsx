@@ -56,12 +56,24 @@ const GetCartItems = () => {
   //you cannot make prisma queries nor async await in client side components. Instead make queries in a api route and call with axios
   //upon clicking checkout button, navigate to the order page 
 
-  const handleCheckoutClick = () => {
+  const handleCheckoutClick = async () => {
     if(cartItems.length === 0)
       alert("ERROR: cannot place an order, cart is empty");
-    else
-      router.push(`/order?order_total_price=${order_total_price}`); //get rid of this
-      // router.push(`/order`);
+    else{
+      await axios.post('/api/order/setOrderTotalPrice', {
+          email: session.user.email,
+          orderTotalPrice: order_total_price
+      }, {
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      }).then((response) => {
+      }).catch((error) => {
+          console.log(error);
+      });
+      // router.push(`/order?order_total_price=${order_total_price}`); //get rid of this
+      router.push(`/checkout`);
+    }
   }
   
 
