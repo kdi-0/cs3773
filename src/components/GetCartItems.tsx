@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; //must use next/navigation and not next/router for files in app folder for useRouter()
 import DeleteFromCart from './DeleteFromCart';
 import DiscountCode from './DiscountCode';
 
@@ -17,7 +17,7 @@ const GetCartItems = () => {
   const [before_Tax_Order_total_price, setBeforeTaxOrderTotalPrice] = useState(0);
   
   //order_total_price is final cost of order with coupon and taxes
-  const [order_total_price, setOrderTotalPrice] = useState(before_Tax_Order_total_price + (before_Tax_Order_total_price * .0825)); 
+  const [order_total_price, setOrderTotalPrice] = useState((before_Tax_Order_total_price + (before_Tax_Order_total_price * .0825)).toFixed(2)); 
 
   const [discountPercent, setDiscountPercent] = useState(0); 
   // discountPercent used for stacking coupons (ex: 10% and 5% should take 15% from the cost before any tax)
@@ -56,9 +56,24 @@ const GetCartItems = () => {
   //you cannot make prisma queries nor async await in client side components. Instead make queries in a api route and call with axios
   //upon clicking checkout button, navigate to the order page 
 
-  const handleCheckoutClick = () => {
-    // router.push(`/order?order_total_price=${order_total_price}`); //get rid of this
-    router.push(`/order`);
+  const handleCheckoutClick = async () => {
+    if(cartItems.length === 0)
+      alert("ERROR: cannot place an order, cart is empty");
+    else{
+      await axios.post('/api/order/setOrderTotalPrice', {
+          email: session.user.email,
+          orderTotalPrice: order_total_price
+      }, {
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      }).then((response) => {
+      }).catch((error) => {
+          console.log(error);
+      });
+      // router.push(`/order?order_total_price=${order_total_price}`); //get rid of this
+      router.push(`/checkout`);
+    }
   }
   
 

@@ -15,7 +15,7 @@ const DiscountCode = ({before_Tax_Order_total_price, setOrderTotalPrice, discoun
   
   const handleDiscountInputChange = (event) => {
     setDiscountCode(String(event.target.value));
-    console.log("Discount code: ", discountCode);
+    // console.log("Discount code: ", discountCode);
   }
   
   // discount code main function
