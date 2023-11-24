@@ -89,107 +89,118 @@ export default function OrderForm({cartItems, userEmail, order_total_price, setC
 
     return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label>
+      <form className="bg-green-100 p-8 rounded shadow-md w-96" onSubmit={handleSubmit}>
+        <label className="block mb-2">
           First and Last Name:
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
+            className="form-input mt-1"
           />
         </label>
         <br />
 
-        <label>
+        <label className="block mb-2">
           Phone Number:
           <input
             type="text"
             name="phoneNum"
             value={formData.phoneNum}
             onChange={handleChange}
+            className="form-input mt-1"
+
           />
         </label>
         <br />
 
-        <label>
+        <label className="block mb-2">
           Street Address:
           <input
             type="text"
             name="street_address"
             value={formData.street_address}
             onChange={handleChange}
+            className="form-input mt-1"
           />
         </label>
         <br />
 
-        <label>
+        <label className="block mb-2">
           City:
           <input
             type="text"
             name="city"
             value={formData.city}
             onChange={handleChange}
+            className="form-input mt-1"
+
           />
         </label>
         <br />
 
-        <label>
+        <label className="block mb-2">
           State:
           <input
             type="text"
             name="state"
             value={formData.state}
             onChange={handleChange}
+            className="form-input mt-1"
           />
         </label>
         <br />
 
-        <label>
+        <label className="block mb-2">
           Zip Code:
           <input
             type="text"
             name="zip_code"
             value={formData.zip_code}
             onChange={handleChange}
+            className="form-input mt-1"
           />
         </label>
         <br />
 
-        <label>
+        <label className="block mb-2">
           Card Number:
           <input
             type="text"
             name="card_number"
             value={formData.card_number}
             onChange={handleChange}
+            className="form-input mt-1"
           />
         </label>
         <br />
 
-        <label>
+        <label className="block mb-2">
           Expiration Date (MM/YY):
           <input
             type="text"
             name="exp"
             value={formData.exp}
             onChange={handleChange}
+            className="form-input mt-1"
           />
         </label>
         <br />
 
-        <label>
+        <label className="block mb-2">
           CVV:
           <input
             type="text"
             name="cvv"
             value={formData.cvv}
             onChange={handleChange}
+            className="form-input mt-1"
           />
         </label>
         <br />
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="bg-white border font-semibold">Submit</button>
       </form>
     </div>
   );

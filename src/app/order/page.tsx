@@ -4,6 +4,7 @@ import {  useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import OrderForm from '@/src/components/OrderForm';
+import Navbar from '@/src/components/Navbar';
 
 export default function Page() {
   const { data: session } = useSession();
@@ -48,8 +49,12 @@ export default function Page() {
 
   return (
     <div>
-      <OrderForm cartItems={cartItems} userEmail={session.user.email} order_total_price={order_total_price}
-        setCartItems={setCartItems}/>
+      <Navbar />
+      <h2 className="text-2xl font-semibold">Checkout</h2>
+      <div className="min-h-screen flex items-center justify-left">
+        <OrderForm cartItems={cartItems} userEmail={session.user.email} order_total_price={order_total_price}
+          setCartItems={setCartItems}/>
+      </div>
     </div>
   );
 };
