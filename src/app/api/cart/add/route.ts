@@ -59,20 +59,17 @@ export async function POST(request: Request) {
                     cartItems[existingItemIndex].PRODUCT_PRICE = productInfo.PRODUCT_PRICE;
                 }
                 else{
-                    alert("Cannot add item to cart. You already have the entire stock for that product in your cart");
-                    return NextResponse.json({});
+                    return NextResponse.json({status: "overflow stock"});
                 }
             } else {
                 cartItems.push(productInfo);
             }
             console.log("Updated cart: ", cartItems);
             await kv.set(userCartKey, JSON.stringify(cartItems));
-            alert("Added item to cart!")
-            return NextResponse.json(cartItems);
+            return NextResponse.json({cartItems, status: "success"});
         }
         else{
-            alert("Product is out of stock. Cannot add product to cart.")
-            return NextResponse.json({});
+            return NextResponse.json({status: "out of stock"});
         }
     } catch (e) {
         console.error(e);

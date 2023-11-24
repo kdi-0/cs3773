@@ -24,6 +24,17 @@ const AddToCart = (props) => {
                         'Content-Type': 'application/json'
                     }
                 }).then((response) => {
+                    switch(response.data.status){
+                        case 'success':
+                            alert("Added item to cart!");
+                            break;
+                        case 'out of stock':
+                            alert("Product is out of stock. Cannot add product to cart.");
+                            break;
+                        case 'overflow stock':
+                            alert("Cannot add item to cart. You already have the entire available stock for that product in your cart");
+                            break;
+                    }
                 }).catch((error) => {
                     console.log("ERROR");
                     console.log(error);

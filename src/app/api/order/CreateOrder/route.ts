@@ -50,17 +50,26 @@ export async function POST(request: Request){
         console.log(orders);       
         
         // update products' stock quantity after order has been made
-        /*
+        for(let i=0; i < product_id.length; i++){
+            // get current quantity (stock) for a product
+            const product = await prisma.product.findUnique({ 
+                where: {
+                    PRODUCT_ID: product_id[i]
+                }
+            });
+            //update the product's quantity (stock)
+            const updatedProduct =await prisma.product.update({
+                where: {
+                    PRODUCT_ID: product_id[i],
+                },
+                data: {
+                    PRODUCT_QUANTITY: product.PRODUCT_QUANTITY - product_quantity[i]
+                },
+            });
+            console.log(`Product quantity (stock) update for product id:${product_id[i]}:  
+                ${product.PRODUCT_QUANTITY} -> ${updatedProduct.PRODUCT_QUANTITY}`);
+        }
         
-            // await prisma.product.update({
-            //     where: {
-            //         PRODUCT_ID: product.product_id,
-            //     },
-            //     data: {
-            //         PRODUCT_QUANTITY: 'Viola the Magnificent',
-            //     },
-            // });
-        */
         return NextResponse.json({});
     }
     catch (e) {
