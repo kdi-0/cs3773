@@ -11,6 +11,7 @@ export default function OrderForm({cartItems, userEmail, order_total_price}) {
     // console.log("Cart items from Order Form:" , cartItems);
     const [formData, setFormData] = useState({
         name: '',
+        phoneNum: '',
         street_address: '',
         city: '',
         state: '',
@@ -77,6 +78,17 @@ export default function OrderForm({cartItems, userEmail, order_total_price}) {
             type="text"
             name="name"
             value={formData.name}
+            onChange={handleChange}
+          />
+        </label>
+        <br />
+
+        <label>
+          Phone Number:
+          <input
+            type="text"
+            name="phoneNum"
+            value={formData.phoneNum}
             onChange={handleChange}
           />
         </label>

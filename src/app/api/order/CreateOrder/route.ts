@@ -18,18 +18,35 @@ export async function POST(request: Request){
             where: {USER_EMAIL: requestBody.userEmail}
         });
         console.log("User: ", user);
-        
 
-        // await prisma.order.create({
-        //   data: {
-        //     USER_ID: 1,
-        //     ORDER_DATE: new Date(),
-        //     product_orders: product_orders,
-        //     ORDER_TOTAL_PRICE: 33.45,
-        //     ORDER_SHIPPING_ADDRESS: ORDER_SHIPPING_ADDRESS,
-        //     IS_CURRENT_ORDER: true
-        //   },
-        // })    
+        //npx prisma migrate dev -> run command to update changes made to schema.prisma
+
+        //Products in the order are indexed between product_id and product_quantity. 
+        //Ex: 2nd index in both arrays correspond to the 2nd product in the order
+        let product_id = [];
+        let product_quantity = [];
+        requestBody.cartItems.forEach(product => {
+            product_id.push(Number(product.PRODUCT_ID));
+            product_quantity.push(Number(product.PRODUCT_QUANTITY));
+        });
+        await prisma.order.create({
+          data: {
+            USER_ID: Number(user.USER_ID),
+            ORDER_DATE: new Date(),
+            ORDER_TOTAL_PRICE: Number.parseFloat(requestBody.order_total_price),
+            ORDER_SHIPPING_ADDRESS: ORDER_SHIPPING_ADDRESS,
+            Customer_Name: requestBody.formData.name, //ignore type error
+            Customer_PhoneNum: requestBody.formData.phoneNum,
+            IS_CURRENT_ORDER: true,
+            PRODUCT_ID: product_id,
+            PRODUCT_QUANTITY: product_quantity
+          },
+        })    
+
+        //see if order was created
+        const orders = await prisma.order.findMany();
+        console.log(orders);
+
         return NextResponse.json({});
     }
     catch (e) {
