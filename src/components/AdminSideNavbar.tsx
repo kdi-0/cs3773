@@ -24,42 +24,42 @@ const AdminSideNavbar = () => {
       <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
       <ul>
         <li className="mb-4">
-          <Link href="addproduct">
-            <span className={getLinkStyle('admin/addproduct') }>
+          <Link href={`/product`}>
+            <span className={getLinkStyle('/addproduct')}>
               Create Product
             </span>
           </Link>
         </li>
         <li className="mb-4">
-          <Link href="creatediscountcode">
-            <span className={getLinkStyle('admin/creatediscountcode')}>
+          <Link href={`/creatediscountcode`}>
+            <span className={getLinkStyle('/creatediscountcode')}>
               Create Discount Code
             </span>
           </Link>
         </li>
         <li className="mb-4">
-          <Link href="/modifyusers">
-            <span className={getLinkStyle('admin/modifyusers')}>
+          <Link href={`/modifyusers`}>
+            <span className={getLinkStyle('/modifyusers')}>
               Modify Users
             </span>
           </Link>
         </li>
         <li className="mb-4">
-          <Link href="/items">
-            <span className={getLinkStyle('admin/items')}>
+          <Link href={`/items`}>
+            <span className={getLinkStyle('/items')}>
               Show Currently Placed Items
             </span>
           </Link>
         </li>
         <li className="mb-4">
-          <Link href="/orderhistory">
-            <span className={getLinkStyle('admin/orderhistory')}>
+          <Link href={`/orderhistory`}>
+            <span className={getLinkStyle('/orderhistory')}>
               Show History of Orders
             </span>
           </Link>
         </li>
         <li className="mb-4">
-          <Link href="/">
+          <Link href={`/`}>
             <span className={getLinkStyle('/')}>Home</span>
           </Link>
         </li>

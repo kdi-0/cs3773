@@ -4,11 +4,11 @@ import SearchBar from './SearchBar';
 import Link from 'next/link';
 import { CiShoppingCart } from 'react-icons/ci';
 import { BsChevronCompactUp } from 'react-icons/bs';
+
 import { BiSearch } from 'react-icons/bi';
 import { useSession, signOut, signIn } from 'next-auth/react';
 // type Props = {};
 const Navbar = () => {
-  // const [showProfile, setShowProfile] = useState<boolean>(false);
   const { data: session } = useSession();
   console.log(session?.user);
   const [showNav, setShowNav] = useState<boolean>(false);
@@ -16,33 +16,39 @@ const Navbar = () => {
   const SignOut = () => {
     if (session && session.user) {
       return (
-        <ul className="py-5 px-1 text-neutral-600">
-          <li className="hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer">
-            {session.user.name}
-          </li>
-          <li className="whitespace-nowrap hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer">
-            <a href="/addproduct">Add Product</a>
-          </li>
-          <li
-            onClick={() => signOut()}
-            className="whitespace-nowrap hover:text-red-600 px-5 py-2 cursor-pointer"
-          >
-            Sign Out
-          </li>
-        </ul>
+        <div className="relative group">
+          <ul className="py-5 px-1 text-neutral-600">
+            <li className="hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer">
+              {session.user.name}
+            </li>
+            <li className="whitespace-nowrap hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer">
+              <a href="/addproduct">Add Product</a>
+            </li>
+            <div
+              onClick={() => signOut()}
+              className="whitespace-nowrap hover:text-red-600 px-5 py-2 cursor-pointer"
+            >
+              Sign Out
+            </div>
+          </ul>
+        </div>
       );
     }
     return (
-      <ul>
-        <li className="whitespace-nowrap hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer">
-          <Link href="/login">login</Link>
-        </li>
-      </ul>
+      <div className="flex space-x-4">
+        <Link href="/login" className="text-white">
+          Login
+        </Link>
+        <Link href="/signup" className="text-white">
+          Sign Up
+        </Link>
+      </div>
     );
   };
+
   return (
     <div>
-      <div className="flex items-center justify-between py-4 relative bg-green-500 px-5">
+      <div className="flex items-center justify-between py-4 relative bg-white-200 px-5">
         <div className="flex items-center">
           <div className="font-semibold text-2xl">
             <a href="/">Critter Collectibles</a>
@@ -50,13 +56,13 @@ const Navbar = () => {
           <nav className="max-md:hidden ml-10">
             <ul className="flex items-center opacity-70 text-[15px]">
               <li>
-                <Link href="/aboutus" className="py-3 px-4 inline-block w-full">
-                  About Us
+                <Link href="/" className="py-3 px-4 inline-block w-full">
+                  Home
                 </Link>
               </li>
               <li>
-                <Link href="/coupons" className="py-3 px-4 inline-block w-full">
-                  Coupons
+                <Link href="/shop" className="py-3 px-4 inline-block w-full">
+                  Shop
                 </Link>
               </li>
               {session?.user && session.user.role === 'admin' && (
@@ -72,17 +78,21 @@ const Navbar = () => {
             </ul>
           </nav>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-10">
           <SearchBar />
-          <div className="relative cursor-pointer">
-            <img
-              className="w-[35px] h-[35px] rounded-full object-cover"
-              alt=""
-            />
-            <div className="absolute bg-white z-[2] rounded-lg shadow-lg">
-              <SignOut />
+          {session ? (
+            <div
+              className="relative group cursor-pointer"
+              onClick={() => setShowNav(!showNav)}
+            >
+              <span className="hover:text-white">{session.user.name}</span>
+              <div className={`absolute bg-white z-[2] rounded-lg shadow-lg ${showNav ? 'block' : 'hidden'}`}>
+                <SignOut />
+              </div>
             </div>
-          </div>
+          ) : (
+            <SignOut />
+          )}
           <Link href="/cart">
             <div className="p-2 bg-gray-100 rounded-full">
               <CiShoppingCart size={20} />
@@ -90,20 +100,18 @@ const Navbar = () => {
           </Link>
           <span
             onClick={() => setShowNav(!showNav)}
-            className="p-[9px] bg-gray-100 ronded-full md:hidden"
+            className="p-[9px] bg-gray-100 rounded-full md:hidden"
           >
             <BsChevronCompactUp
-              className={`transition ease-in duration-150 ${
-                showNav ? 'rotate-180' : '0'
-              }`}
+              className={`transition ease-in duration-150 ${showNav ? 'rotate-180' : '0'
+                }`}
             />
           </span>
         </div>
       </div>
       <div
-        className={`md:hidden ${
-          showNav ? 'pb-4 px-5' : 'h-0 invisible opacity-0'
-        }`}
+        className={`md:hidden ${showNav ? 'pb-4 px-5' : 'h-0 invisible opacity-0'
+          }`}
       >
         <ul className="flex flex-col text-[15px] opacity-75 px-2">
           <li>
