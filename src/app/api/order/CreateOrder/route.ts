@@ -30,6 +30,8 @@ export async function POST(request: Request){
             product_quantity.push(Number(product.PRODUCT_QUANTITY));
         });
 
+        //before order is created check to see if product(s) still available (possible added feature)
+
         //Create order with prisma query (adds a new row to the order table in prisma db)
         await prisma.order.create({
           data: {
