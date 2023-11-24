@@ -21,7 +21,7 @@ export async function POST(request: Request){
 
         //npx prisma migrate dev -> run command to update changes made to schema.prisma
 
-        //Products in the order are indexed between product_id and product_quantity. 
+        //Products in the order are indexed in the product_id and product_quantity arrays in the Order table. 
         //Ex: 2nd index in both arrays correspond to the 2nd product in the order
         let product_id = [];
         let product_quantity = [];
@@ -29,6 +29,8 @@ export async function POST(request: Request){
             product_id.push(Number(product.PRODUCT_ID));
             product_quantity.push(Number(product.PRODUCT_QUANTITY));
         });
+
+        //Create order with prisma query (adds a new row to the order table in prisma db)
         await prisma.order.create({
           data: {
             USER_ID: Number(user.USER_ID),
@@ -41,16 +43,28 @@ export async function POST(request: Request){
             PRODUCT_ID: product_id,
             PRODUCT_QUANTITY: product_quantity
           },
-        })    
+        });    
 
         //see if order was created
         const orders = await prisma.order.findMany();
-        console.log(orders);
-
+        console.log(orders);       
+        
+        // update products' stock quantity after order has been made
+        /*
+        
+            // await prisma.product.update({
+            //     where: {
+            //         PRODUCT_ID: product.product_id,
+            //     },
+            //     data: {
+            //         PRODUCT_QUANTITY: 'Viola the Magnificent',
+            //     },
+            // });
+        */
         return NextResponse.json({});
     }
     catch (e) {
         console.error(e);
-        return NextResponse.json({ error: "Server side error occured." });
+        return NextResponse.json({ error: "Server side error occured when creating order." });
     }
 }

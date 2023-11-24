@@ -24,7 +24,6 @@ const AddToCart = (props) => {
                         'Content-Type': 'application/json'
                     }
                 }).then((response) => {
-                    alert("Added item to cart!")
                 }).catch((error) => {
                     console.log("ERROR");
                     console.log(error);

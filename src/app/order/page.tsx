@@ -33,7 +33,7 @@ export default function Page() {
         const res = JSON.parse(response.data);
         setCartItems(res);
         setLoading(false);
-        console.log(cartItems);
+        console.log("cart items:", cartItems);
       }).catch((error) => {
         console.log(error);
         setLoading(false);
@@ -48,7 +48,8 @@ export default function Page() {
 
   return (
     <div>
-      <OrderForm cartItems={cartItems} userEmail={session.user.email} order_total_price={order_total_price}/>
+      <OrderForm cartItems={cartItems} userEmail={session.user.email} order_total_price={order_total_price}
+        setCartItems={setCartItems}/>
     </div>
   );
 };

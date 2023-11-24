@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 
-export default function OrderForm({cartItems, userEmail, order_total_price}) {
+export default function OrderForm({cartItems, userEmail, order_total_price, setCartItems}) {
     const router = useRouter();
     // console.log("Test", cartItems, userEmail, order_total_price);
 
@@ -31,45 +31,63 @@ export default function OrderForm({cartItems, userEmail, order_total_price}) {
         });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (e) => 
+    {
+        if(cartItems.length !== 0 && cartItems !== null)
+        {
+            e.preventDefault();
 
-        // Check if any field is empty and have 100 character limit for fields before submitting
-        if (Object.values(formData).every((value) => (value.trim() !== '' && value.length < 100))) {
-            try{
-                //create order and add products to order
-                //create_order(products_orders)
-                await axios.post('/api/order/CreateOrder', {
-                    userEmail: userEmail,
-                    formData: formData,
-                    cartItems: cartItems,
-                    order_total_price: order_total_price
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then((response) => {
-                    console.log("Order created with query");
-                }).catch((error) => {
-                    console.log(error);
-                });
+            // Check if any field is empty and have 100 character limit for fields before submitting
+            if (Object.values(formData).every((value) => (value.trim() !== '' && value.length < 100))) 
+            {
+                try{
+                    //queries to order table in prisma (creates order)
+                    await axios.post('/api/order/CreateOrder', {
+                        userEmail: userEmail,
+                        formData: formData,
+                        cartItems: cartItems,
+                        order_total_price: order_total_price
+                    }, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((response) => {
+                        console.log("Order created with query");
+                    }).catch((error) => {
+                        console.log(error);
+                    });
 
-                //remove items in user's cart
+                    //empties user's cart
+                    await axios.post('/api/order/EmptyCart', {
+                        userEmail: userEmail,
+                    }, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((response) => {
+                        console.log("Cart has been emptied");
+                        setCartItems([]);
+                    }).catch((error) => {
+                        console.log(error);
+                    });
 
+                    alert('Order successfully placed');
+                    router.push('/'); // navigate user to home page upon successful order creation
+                }
+                catch{
+                    console.log("ERROR: Problem occurred when submitting order form");
+                }
+            } 
+            else 
+                alert('Please fill in all fields before submitting and make sure fields are less than 100 characters');
+        
+        
+        }
+        else
+            alert("ERROR: Cart is empty, cannot place an order");
+    };
 
-                
-                // router.push('/'); // navigate user to home page upon successful order creation
-                alert('Order successfully placed');
-            }
-            catch{
-                console.log("ERROR: Problem occurred when submitting order form");
-            }
-    } else {
-      alert('Please fill in all fields before submitting and make sure fields are less than 100 characters');
-    }
-  };
-
-  return (
+    return (
     <div>
       <form onSubmit={handleSubmit}>
         <label>
