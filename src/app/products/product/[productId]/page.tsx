@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: { productId } }) {
                   1 +
                 </button>
               </div>
-              <AddToCart />
+              <AddToCart product={product} />
             </div>
             <div className="mt-4 p-5 bg-gray-100 border-t border-gray-200">
               <h3 className="text-lg font-semibold mb-2">Product Description</h3>
