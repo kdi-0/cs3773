@@ -8,6 +8,7 @@ const AddToCart = (props) => {
     const { data: session } = useSession();
     const { product } = props;
 
+    const imageUrl = product.PRODUCT_IMAGE.split('","')[0].slice(2, -2);
     return (
         <div>
             <button className="w-full bg-green-500 text-white p-3 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
@@ -19,6 +20,7 @@ const AddToCart = (props) => {
                         PRODUCT_NAME: product.PRODUCT_NAME,
                         PRODUCT_QUANTITY: product.PRODUCT_QUANTITY,
                         PRODUCT_PRICE: product.PRODUCT_PRICE,
+                        PRODUCT_IMAGE: imageUrl,
                     }, {
                         headers: {
                             'Content-Type': 'application/json'

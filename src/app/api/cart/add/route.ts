@@ -27,17 +27,17 @@ export async function POST(request: Request) {
             // PRODUCT_QUANTITY: requestBody.PRODUCT_QUANTITY, //do not use this value for user's cart, this is for stock purposes
             PRODUCT_QUANTITY: 1,
             PRODUCT_PRICE: requestBody.PRODUCT_PRICE,
-            PRODUCT_IMAGE: "https://picsum.photos/250/300"
+            PRODUCT_IMAGE: requestBody.PRODUCT_IMAGE,
         };
         console.log("product info: ", productInfo);
 
         let existingItemIndex;
-        if (cartItems != null){  // cart not empty
+        if (cartItems != null) {  // cart not empty
             existingItemIndex = cartItems.findIndex(item => item.PRODUCT_ID === requestBody.PRODUCT_ID);
         }
-        else{         //    item.PRODUCT_ID producing null error when trying to be accessed in case of cart being empty (FIXED this problem)
+        else {         //    item.PRODUCT_ID producing null error when trying to be accessed in case of cart being empty (FIXED this problem)
             console.log("cart is empty/has not been created");
-            cartItems=[];
+            cartItems = [];
             existingItemIndex = -1;
         }
 
