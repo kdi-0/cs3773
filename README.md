@@ -6,10 +6,12 @@ After pulling repo, make sure nodeJS is installed.
 Install dependencies in package.json:
 **npm install**
 
-Prisma Schema
+Prisma
+```
 -npx prisma generate  : Create Prisma client
 -npx prisma migrate dev  : apply changes made to prisma schema
 -npx prisma studio  : browse prisma db
+```
 
 First, run the development server:
 
