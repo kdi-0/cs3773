@@ -24,8 +24,7 @@ export async function POST(request: Request) {
         let productInfo = {
             PRODUCT_ID: requestBody.PRODUCT_ID,
             PRODUCT_NAME: requestBody.PRODUCT_NAME,
-            // PRODUCT_QUANTITY: requestBody.PRODUCT_QUANTITY, //do not use this value for user's cart, this is for stock purposes
-            PRODUCT_QUANTITY: 1,
+            PRODUCT_QUANTITY: requestBody.quantity,
             PRODUCT_PRICE: requestBody.PRODUCT_PRICE,
             PRODUCT_IMAGE: requestBody.PRODUCT_IMAGE,
         };
