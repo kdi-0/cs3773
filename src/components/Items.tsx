@@ -19,7 +19,7 @@ const Item = async (props: Props) => {
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-20 gap-12 ">
         {products.map((product) => (
           <div key={product.PRODUCT_ID}>
-            <Link href={`/dashboard/${product.PRODUCT_ID}`}>
+            <Link href={`/products/product/${product.PRODUCT_ID}`}>
               <div className="relative rounded-lg">
                 <img
                   src={product.PRODUCT_IMAGE.split('","')[0].slice(2, -2)}
@@ -38,7 +38,7 @@ const Item = async (props: Props) => {
                 ${product.PRODUCT_PRICE}.00
               </span>
             </Link>
-            <AddToCart product={product}/>
+            <AddToCart product={product} />
           </div>
         ))}
       </div>
@@ -48,4 +48,3 @@ const Item = async (props: Props) => {
 
 export default Item;
 
-          //  <AddToCart product={{PRODUCT_ID: product.PRODUCT_ID, PRODUCT_QUANTITY: product.PRODUCT_QUANTITY}}/>

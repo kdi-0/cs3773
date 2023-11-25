@@ -1,7 +1,7 @@
 import Navbar from "@/src/components/Navbar";
 import AddToCart from "@/src/components/AddToCart";
 import prisma from '@/src/app/prismadb';
-export default async function Page({ params }: { params: { productId } }) {
+export default async function Page({ params }: { params: { productId: string } }) {
   const currentId = parseInt(params.productId);
   const product = await prisma.product.findUnique({
     where: { PRODUCT_ID: currentId, },
@@ -19,11 +19,7 @@ export default async function Page({ params }: { params: { productId } }) {
             <div className="bg-green-100 p-5">
               <h2 className="text-2xl font-bold mb-2">{product.PRODUCT_NAME}</h2>
               <p className="text-xl text-gray-800 mb-4">${product.PRODUCT_PRICE.toFixed(2)}</p>
-              <div className="mb-4">
-                <button className="text-sm bg-gray-200 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300">
-                  1 +
-                </button>
-              </div>
+              <p className="text-sm text-gray-800 mb-4">Quantity Left: {product.PRODUCT_QUANTITY}</p>
               <AddToCart product={product} />
             </div>
             <div className="mt-4 p-5 bg-gray-100 border-t border-gray-200">
