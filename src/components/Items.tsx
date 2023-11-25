@@ -2,6 +2,7 @@ import React from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
 import Link from 'next/link';
 import prisma from '@/src/app/prismadb';
+import AddToCart from './AddToCart';
 
 type Props = {};
 
@@ -37,6 +38,7 @@ const Item = async (props: Props) => {
                 ${product.PRODUCT_PRICE}.00
               </span>
             </Link>
+            <AddToCart product={product}/>
           </div>
         ))}
       </div>
@@ -45,3 +47,5 @@ const Item = async (props: Props) => {
 };
 
 export default Item;
+
+          //  <AddToCart product={{PRODUCT_ID: product.PRODUCT_ID, PRODUCT_QUANTITY: product.PRODUCT_QUANTITY}}/>

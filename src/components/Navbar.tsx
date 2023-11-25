@@ -65,6 +65,11 @@ const Navbar = () => {
                   Shop
                 </Link>
               </li>
+              <li>
+                <Link href="/products?product_name=" className="py-3 px-4 inline-block w-full">
+                  Products
+                </Link>
+              </li>
               {session?.user && session.user.role === 'admin' && (
                 <li>
                   <Link
