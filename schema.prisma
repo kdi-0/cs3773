@@ -18,24 +18,19 @@ model User {
 }
 
 model Order {
-    ORDER_ID         Int             @id @default(autoincrement())
-    USER_ID          Int
-    ORDER_DATE       DateTime
-    ORDER_TOTAL_PRICE Float
+    ORDER_ID               Int             @id @default(autoincrement())
+    USER_ID                Int
+    ORDER_DATE             DateTime
+    ORDER_TOTAL_PRICE      Float
     ORDER_SHIPPING_ADDRESS String
-    IS_CURRENT_ORDER Boolean
-    product_orders   Product_Order[]
-    user             User            @relation(fields: [USER_ID], references: [USER_ID])
+    Customer_Name          String
+    Customer_PhoneNum      String
+    IS_CURRENT_ORDER       Boolean
+    PRODUCT_ID             Int[]
+    PRODUCT_QUANTITY       Int[]
+    user                   User            @relation(fields: [USER_ID], references: [USER_ID])
 }
 
-model Product_Order {
-    PRODUCT_ORDER_ID Int     @id @default(autoincrement())
-    ORDER_ID         Int
-    PRODUCT_ID       Int
-    ORDER_QUANTITY   Int
-    order            Order   @relation(fields: [ORDER_ID], references: [ORDER_ID])
-    product          Product @relation(fields: [PRODUCT_ID], references: [PRODUCT_ID])
-}
 
 model Product {
     PRODUCT_ID          Int             @id @default(autoincrement())
@@ -46,7 +41,6 @@ model Product {
     PRODUCT_QUANTITY    Int
     PRODUCT_DESCRIPTION String?
     PRODUCT_IMAGE       String?
-    product_orders      Product_Order[]
     category            Category        @relation(fields: [PRODUCT_CATEGORY], references: [CATEGORY_ID])
     pet                 Pet             @relation(fields: [PET_ID], references: [PET_ID])
 }
