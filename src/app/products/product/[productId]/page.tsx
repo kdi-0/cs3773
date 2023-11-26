@@ -1,5 +1,4 @@
 import Navbar from "@/src/components/Navbar";
-import AddToCart from "@/src/components/AddToCart";
 import prisma from '@/src/app/prismadb';
 import Link from "next/link";
 import ProductDetails from "@/src/components/ProductDetails";

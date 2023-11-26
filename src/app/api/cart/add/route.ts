@@ -38,37 +38,37 @@ export async function POST(request: Request) {
                 PRODUCT_ID: productInfo.PRODUCT_ID
             }
         });
-        if(product.PRODUCT_QUANTITY > 0){ //product available
+        if (product.PRODUCT_QUANTITY > 0) { //product available
 
             let existingItemIndex;
-            if (cartItems != null){  // cart not empty
+            if (cartItems != null) {  // cart not empty
                 existingItemIndex = cartItems.findIndex(item => item.PRODUCT_ID === requestBody.PRODUCT_ID);
             }
-            else{         //    item.PRODUCT_ID producing null error when trying to be accessed in case of cart being empty (FIXED this problem)
+            else {         //    item.PRODUCT_ID producing null error when trying to be accessed in case of cart being empty (FIXED this problem)
                 console.log("cart is empty/has not been created");
-                cartItems=[];
+                cartItems = [];
                 existingItemIndex = -1;
             }
 
             if (existingItemIndex !== -1) { // already in cart, just update using newest information
                 //check to see if the user adding the product to their cart will exceed remaining stock for that product
-                if(cartItems[existingItemIndex].PRODUCT_QUANTITY + 1 <= product.PRODUCT_QUANTITY){
+                if (cartItems[existingItemIndex].PRODUCT_QUANTITY + productInfo.PRODUCT_QUANTITY <= product.PRODUCT_QUANTITY) {
                     cartItems[existingItemIndex].PRODUCT_QUANTITY = parseInt(cartItems[existingItemIndex].PRODUCT_QUANTITY);
                     cartItems[existingItemIndex].PRODUCT_QUANTITY += productInfo.PRODUCT_QUANTITY;
                     cartItems[existingItemIndex].PRODUCT_PRICE = productInfo.PRODUCT_PRICE;
                 }
-                else{
-                    return NextResponse.json({status: "overflow stock"});
+                else {
+                    return NextResponse.json({ status: "overflow stock" });
                 }
             } else {
                 cartItems.push(productInfo);
             }
             console.log("Updated cart: ", cartItems);
             await kv.set(userCartKey, JSON.stringify(cartItems));
-            return NextResponse.json({cartItems, status: "success"});
+            return NextResponse.json({ cartItems, status: "success" });
         }
-        else{
-            return NextResponse.json({status: "out of stock"});
+        else {
+            return NextResponse.json({ status: "out of stock" });
         }
     } catch (e) {
         console.error(e);
