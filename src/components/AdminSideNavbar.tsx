@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
@@ -24,35 +24,31 @@ const AdminSideNavbar = () => {
       <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
       <ul>
         <li className="mb-4">
-          <Link href={`/product`}>
-            <span className={getLinkStyle('/addproduct')}>
-              Create Product
-            </span>
+          <Link href={`/addproduct`} as="/admin/addproduct">
+            <span className={getLinkStyle('/addproduct')}>Create Product</span>
           </Link>
         </li>
         <li className="mb-4">
-          <Link href={`/creatediscountcode`}>
+          <Link href={`/creatediscountcode`} as="/admin/creatediscountcode">
             <span className={getLinkStyle('/creatediscountcode')}>
               Create Discount Code
             </span>
           </Link>
         </li>
         <li className="mb-4">
-          <Link href={`/modifyusers`}>
-            <span className={getLinkStyle('/modifyusers')}>
-              Modify Users
+          <Link href={`/modifyusers`} as="/admin/modifyusers">
+            <span className={getLinkStyle('/modifyusers')}>Modify Users</span>
+          </Link>
+        </li>
+        <li className="mb-4">
+          <Link href={`/updateproducts`} as="/admin/updateproducts">
+            <span className={getLinkStyle('/updateproducts')}>
+              Update Products
             </span>
           </Link>
         </li>
         <li className="mb-4">
-          <Link href={`/items`}>
-            <span className={getLinkStyle('/items')}>
-              Show Currently Placed Items
-            </span>
-          </Link>
-        </li>
-        <li className="mb-4">
-          <Link href={`/orderhistory`}>
+          <Link href={`/orderhistory`} as="/admin/orderhistory">
             <span className={getLinkStyle('/orderhistory')}>
               Show History of Orders
             </span>
