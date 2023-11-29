@@ -45,6 +45,7 @@ const CreateDiscountCode = () => {
 
   return (
     <>
+      <ViewDiscountCode />
       <div className="max-w-screen-lg mx-auto p-6 bg-white rounded-lg shadow-lg">
         <h1 className="text-3xl mb-6 text-center font-bold">
           Create Discount Code
@@ -85,7 +86,6 @@ const CreateDiscountCode = () => {
           </button>
         </form>
       </div>
-      <ViewDiscountCode />
     </>
   );
 };

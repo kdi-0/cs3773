@@ -9,22 +9,23 @@ const OrderHistory = () => {
   const [sortBy, setSortBy] = useState('date');
   const [sortOrder, setSortOrder] = useState('asc');
   const [searchInput, setSearchInput] = useState('');
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      const [ordersResponse, usersResponse] = await axios.all([
+        axios.get('/api/orders'),
+        axios.get('/api/accounts/getaccounts'),
+      ]);
+
+      setOrders(ordersResponse.data.data);
+      setUsers(usersResponse.data.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [ordersResponse, usersResponse] = await axios.all([
-          axios.get('/api/orders'),
-          axios.get('/api/accounts/getaccounts'),
-        ]);
-
-        setOrders(ordersResponse.data.data);
-        setUsers(usersResponse.data.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -68,12 +69,78 @@ const OrderHistory = () => {
     sortOrders('ORDER_TOTAL_PRICE', sortOrder);
   };
 
+  const sortByOrderID = () => {
+    setSortBy('orderID');
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    sortOrders('ORDER_ID', sortOrder);
+  };
+
+  const sortByShippingAddress = () => {
+    setSortBy('shippingAddress');
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    sortOrders('ORDER_SHIPPING_ADDRESS', sortOrder);
+  };
+
+  const sortByCustomerName = () => {
+    setSortBy('customerName');
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    sortOrders('Customer_Name', sortOrder);
+  };
+
+  const sortByPhoneNumber = () => {
+    setSortBy('phoneNumber');
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    sortOrders('Customer_PhoneNum', sortOrder);
+  };
+
+  const sortByProductIDs = () => {
+    setSortBy('productIDs');
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    sortOrders('PRODUCT_ID', sortOrder);
+  };
+
+  const sortByProductQuantities = () => {
+    setSortBy('productQuantities');
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    sortOrders('PRODUCT_QUANTITY', sortOrder);
+  };
+
+  const sortByTotalPrice = () => {
+    setSortBy('totalPrice');
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    sortOrders('ORDER_TOTAL_PRICE', sortOrder);
+  };
+
+  const sortByUserName = () => {
+    setSortBy('userName');
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    sortOrders('User_Name', sortOrder);
+  };
+
   const handleToggleCurrentOrders = () => {
     setShowCurrentOrders((prev) => !prev);
   };
 
   const handleSearchChange = (event) => {
     setSearchInput(event.target.value);
+  };
+
+  const handleModifyClick = (order) => {
+    setSelectedOrder(order);
+    // Open your modification modal or form here
+    // You can use a state variable to control the visibility of the modal
+  };
+
+  const handleDeleteClick = async (order) => {
+    try {
+      // Send a DELETE request to your API to delete the order
+      await axios.delete('/api/orders', { data: { ORDER_ID: order.ORDER_ID } });
+
+      // Refetch the orders after deletion
+      fetchData();
+    } catch (error) {
+      console.error('Error deleting order:', error);
+    }
   };
 
   return (
@@ -124,6 +191,68 @@ const OrderHistory = () => {
         >
           Sort by Order Size
         </button>
+        <button
+          className={`text-blue-500 ${sortBy === 'orderID' ? 'font-bold' : ''}`}
+          onClick={sortByOrderID}
+        >
+          Sort by Order ID
+        </button>
+        <button
+          className={`text-blue-500 ${
+            sortBy === 'shippingAddress' ? 'font-bold' : ''
+          }`}
+          onClick={sortByShippingAddress}
+        >
+          Sort by Shipping Address
+        </button>
+        <button
+          className={`text-blue-500 ${
+            sortBy === 'customerName' ? 'font-bold' : ''
+          }`}
+          onClick={sortByCustomerName}
+        >
+          Sort by Customer Name
+        </button>
+        <button
+          className={`text-blue-500 ${
+            sortBy === 'phoneNumber' ? 'font-bold' : ''
+          }`}
+          onClick={sortByPhoneNumber}
+        >
+          Sort by Phone Number
+        </button>
+        <button
+          className={`text-blue-500 ${
+            sortBy === 'productIDs' ? 'font-bold' : ''
+          }`}
+          onClick={sortByProductIDs}
+        >
+          Sort by Product IDs
+        </button>
+        <button
+          className={`text-blue-500 ${
+            sortBy === 'productQuantities' ? 'font-bold' : ''
+          }`}
+          onClick={sortByProductQuantities}
+        >
+          Sort by Product Quantities
+        </button>
+        <button
+          className={`text-blue-500 ${
+            sortBy === 'totalPrice' ? 'font-bold' : ''
+          }`}
+          onClick={sortByTotalPrice}
+        >
+          Sort by Total Price
+        </button>
+        <button
+          className={`text-blue-500 ${
+            sortBy === 'userName' ? 'font-bold' : ''
+          }`}
+          onClick={sortByUserName}
+        >
+          Sort by User Name
+        </button>
         <label className="flex items-center">
           <input
             type="checkbox"
@@ -135,64 +264,154 @@ const OrderHistory = () => {
         </label>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {Array.isArray(orders) && orders.length > 0 ? (
-          orders
-            .filter((order) =>
-              showCurrentOrders ? order.IS_CURRENT_ORDER : true
-            )
-            .filter(
-              (order) =>
-                users
-                  .find((user) => user.USER_ID === order.USER_ID)
-                  ?.USER_NAME.toLowerCase()
-                  .includes(searchInput.toLowerCase())
-            )
-            .map((order) => (
-              <div
-                key={order.ORDER_ID}
-                className="border p-4 rounded-md shadow-md bg-white"
-              >
-                <p className="text-lg font-semibold mb-2">
-                  Order ID: {order.ORDER_ID}
-                </p>
-                <p>Date: {new Date(order.ORDER_DATE).toLocaleString()}</p>
-                <p>Shipping Address: {order.ORDER_SHIPPING_ADDRESS}</p>
-                <p>Customer Name: {order.Customer_Name}</p>
-                <p>Customer Phone Number: {order.Customer_PhoneNum}</p>
-                {order.PRODUCT_ID && order.PRODUCT_ID.length > 0 ? (
-                  <>
-                    <p>Product IDs: {order.PRODUCT_ID.join(', ')}</p>
-                    <p>
-                      Product Quantities: {order.PRODUCT_QUANTITY.join(', ')}
-                    </p>
-                  </>
-                ) : (
-                  <p>No products in the order</p>
-                )}
-                {order.ORDER_TOTAL_PRICE !== undefined ? (
-                  <p>Total Price: ${order.ORDER_TOTAL_PRICE.toFixed(2)}</p>
-                ) : (
-                  <p>Total Price not available</p>
-                )}
-
-                {/* Find and display the corresponding user name */}
-                {Array.isArray(users) && users.length > 0 ? (
-                  <p>
-                    User Name:{' '}
-                    {users.find((user) => user.USER_ID === order.USER_ID)
-                      ?.USER_NAME || 'N/A'}
-                  </p>
-                ) : (
-                  <p>User Name not available</p>
-                )}
-              </div>
-            ))
-        ) : (
-          <p>No orders available</p>
-        )}
-      </div>
+      <table className="min-w-full border-collapse border border-gray-300">
+        <thead>
+          <tr>
+            <th
+              className={`border border-gray-300 px-4 py-2 ${
+                sortBy === 'orderID' ? 'bg-gray-200' : ''
+              }`}
+              onClick={sortByOrderID}
+            >
+              Order ID
+            </th>
+            <th
+              className={`border border-gray-300 px-4 py-2 ${
+                sortBy === 'date' ? 'bg-gray-200' : ''
+              }`}
+              onClick={sortByDateAsc}
+            >
+              Date
+            </th>
+            <th
+              className={`border border-gray-300 px-4 py-2 ${
+                sortBy === 'shippingAddress' ? 'bg-gray-200' : ''
+              }`}
+              onClick={sortByShippingAddress}
+            >
+              Shipping Address
+            </th>
+            <th
+              className={`border border-gray-300 px-4 py-2 ${
+                sortBy === 'customerName' ? 'bg-gray-200' : ''
+              }`}
+              onClick={sortByCustomerName}
+            >
+              Customer Name
+            </th>
+            <th
+              className={`border border-gray-300 px-4 py-2 ${
+                sortBy === 'phoneNumber' ? 'bg-gray-200' : ''
+              }`}
+              onClick={sortByPhoneNumber}
+            >
+              Phone Number
+            </th>
+            <th
+              className={`border border-gray-300 px-4 py-2 ${
+                sortBy === 'productIDs' ? 'bg-gray-200' : ''
+              }`}
+              onClick={sortByProductIDs}
+            >
+              Product IDs
+            </th>
+            <th
+              className={`border border-gray-300 px-4 py-2 ${
+                sortBy === 'productQuantities' ? 'bg-gray-200' : ''
+              }`}
+              onClick={sortByProductQuantities}
+            >
+              Product Quantities
+            </th>
+            <th
+              className={`border border-gray-300 px-4 py-2 ${
+                sortBy === 'totalPrice' ? 'bg-gray-200' : ''
+              }`}
+              onClick={sortByTotalPrice}
+            >
+              Total Price
+            </th>
+            <th
+              className={`border border-gray-300 px-4 py-2 ${
+                sortBy === 'userName' ? 'bg-gray-200' : ''
+              }`}
+              onClick={sortByUserName}
+            >
+              User Name
+            </th>
+            <th className="border border-gray-300 px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.isArray(orders) && orders.length > 0 ? (
+            orders
+              .filter((order) =>
+                showCurrentOrders ? order.IS_CURRENT_ORDER : true
+              )
+              .filter(
+                (order) =>
+                  users
+                    .find((user) => user.USER_ID === order.USER_ID)
+                    ?.USER_NAME.toLowerCase()
+                    .includes(searchInput.toLowerCase())
+              )
+              .map((order) => (
+                <tr key={order.ORDER_ID} className="border border-gray-300">
+                  <td className="border border-gray-300 px-4 py-2">
+                    {order.ORDER_ID}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {new Date(order.ORDER_DATE).toLocaleString()}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {order.ORDER_SHIPPING_ADDRESS}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {order.Customer_Name}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {order.Customer_PhoneNum}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {order.PRODUCT_ID}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {order.PRODUCT_QUANTITY}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {order.ORDER_TOTAL_PRICE}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {Array.isArray(users) && users.length > 0 ? (
+                      <p>
+                        {users.find((user) => user.USER_ID === order.USER_ID)
+                          ?.USER_NAME || 'N/A'}
+                      </p>
+                    ) : (
+                      <p>User Name not available</p>
+                    )}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <button
+                      className="text-red-500 ml-2"
+                      onClick={() => handleDeleteClick(order)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+          ) : (
+            <tr>
+              <td colSpan={10} className="border border-gray-300 px-4 py-2">
+                No orders available
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };
+
 export default OrderHistory;
