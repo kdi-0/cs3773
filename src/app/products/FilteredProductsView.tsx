@@ -49,8 +49,8 @@ function FilterProductsView({ filteredProducts, allProducts }: FilterProductsVie
   return (
     <div>
       <div className="flex place-content-center p-2">
-        <button className="p-2 bg-gray-100 rounded-full hover:bg-gray-300" onClick={() => handleSortChange('PRODUCT_PRICE')}>Sort by Price</button>
-        <button className="p-2 bg-gray-100 rounded-full hover:bg-gray-300" onClick={() => handleSortChange('PRODUCT_QUANTITY')}>Sort by Quantity</button>
+        <button className="p-2 bg-gray-100 rounded-full hover:bg-gray-300" onClick={() => handleSortChange('PRODUCT_PRICE')}>Sort by Price [{sortDirectionPrice === true ? "Ascending\u25B2" : "Descending\u25BC"}]</button>
+        <button className="p-2 bg-gray-100 rounded-full hover:bg-gray-300" onClick={() => handleSortChange('PRODUCT_QUANTITY')}>Sort by Quantity[{sortDirectionQuantity === true ? "Ascending\u25B2" : "Descending\u25BC"}]</button>
         <button className="p-2 bg-gray-100 rounded-full hover:bg-gray-300" onClick={handleClearFilters}>Clear Filters</button>
       </div>
       <div className="flex flex-wrap gap-5 place-content-center">
