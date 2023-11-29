@@ -1,23 +1,34 @@
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 
 const SearchBar = () => {
-  const router = useRouter()
+  const router = useRouter();
+  const [searchParam, setSearchParam] = useState('product_name');
+  const [searchValue, setSearchValue] = useState('');
+
+  function handleSearch() {
+    router.push(`/products?${searchParam}=${encodeURIComponent(searchValue)}`);
+  }
 
   function handleKeyPress(event) {
-    // Check if the pressed key is "Enter" (key code 13)
     if (event.key === 'Enter') {
-      // Call your function here
-      console.log('pressed enter:', event.target.value)
-      router.push(`/products?product_name=${event.target.value}`)
+      handleSearch();
     }
+  }
+
+  function handleDropdownChange(event) {
+    setSearchParam(event.target.value);
   }
 
   return (
     <div>
       <div className="flex items-center bg-gray-100 p-2 rounded-full max-md:hidden flex-grow">
-        <button>
+        <select onChange={handleDropdownChange} className="outline-none bg-transparent">
+          <option value="product_name">name</option>
+          <option value="product_description">description</option>
+        </select>
+        <button onClick={handleSearch}>
           <BiSearch size={20} className="opacity-50" />
         </button>
         <input
@@ -26,6 +37,8 @@ const SearchBar = () => {
           placeholder="Search"
           autoComplete="false"
           maxLength={50}
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
           onKeyDown={handleKeyPress}
         />
       </div>
