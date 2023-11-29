@@ -36,10 +36,10 @@ const Navbar = () => {
     }
     return (
       <div className="flex space-x-4">
-        <Link href="/login" className="text-white">
+        <Link href="/login" className="p-2 bg-gray-100 rounded-xl hover:bg-gray-300 active:bg-gray-500">
           Login
         </Link>
-        <Link href="/signup" className="text-white">
+        <Link href="/register" className="p-2 bg-gray-100 rounded-xl hover:bg-gray-300 active:bg-gray-500">
           Sign Up
         </Link>
       </div>
@@ -70,11 +70,6 @@ const Navbar = () => {
                   Products
                 </Link>
               </li>
-              <li>
-                <Link href="/products?product_name=" className="py-3 px-4 inline-block w-full">
-                  Products
-                </Link>
-              </li>
               {session?.user && session.user.role === 'admin' && (
                 <li>
                   <Link
@@ -95,7 +90,7 @@ const Navbar = () => {
               className="relative group cursor-pointer"
               onClick={() => setShowNav(!showNav)}
             >
-              <span className="hover:text-white">{session.user.name}</span>
+              <span className="hover:bg-grey-400">{session.user.name}</span>
               <div className={`absolute bg-white z-[2] rounded-lg shadow-lg ${showNav ? 'block' : 'hidden'}`}>
                 <SignOut />
               </div>
@@ -103,11 +98,11 @@ const Navbar = () => {
           ) : (
             <SignOut />
           )}
-          <Link href="/cart">
+          {session && session.user && (<Link href="/cart">
             <div className="p-2 bg-gray-100 rounded-full">
               <CiShoppingCart size={20} />
             </div>
-          </Link>
+          </Link>)}
           <span
             onClick={() => setShowNav(!showNav)}
             className="p-[9px] bg-gray-100 rounded-full md:hidden"
