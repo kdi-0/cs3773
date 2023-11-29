@@ -20,7 +20,7 @@ const Navbar = () => {
           <ul className="py-5 px-1 text-neutral-600">
             {session?.user && session.user.role === 'admin' && (
               <li className="whitespace-nowrap hover:bg-gray-100 hover:text-neutral-900 px-5 py-2 cursor-pointer">
-                <a href="/addproduct">Add Product</a>
+                <a href="/admin/addproduct">Add Product</a>
               </li>
             )}
             <div
