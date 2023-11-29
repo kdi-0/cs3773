@@ -1,16 +1,22 @@
 'use client'
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
-
-// MUST SEPARATE client side components such as on click events into their own component (put use client at top of file to specify this) and not be async. Async functions cannot be client side b/c waiting on server to provide response? (RAMIN NOTES)
+import { useState } from 'react';
+import CartLoginModal from './CartLoginModal';
 const AddToCart = (props) => {
 
     const { data: session } = useSession();
     let { product, intentQuantity } = props;
+    const [isModalOpen, setModalOpen] = useState(false);
+
 
     const isOutOfStock = product.PRODUCT_QUANTITY === 0;
     const buttonClasses = `w-full p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-green-300 ${isOutOfStock ? 'bg-gray-500 hover:bg-gray-500 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'}`;
     const handleButtonClick = () => {
+        if (!session) {
+            setModalOpen(true);
+            return;
+        }
         const quantityToAdd = intentQuantity === undefined ? 1 : intentQuantity;
         axios.post('/api/cart/add', {
             name: session.user.name,
@@ -41,14 +47,13 @@ const AddToCart = (props) => {
             console.log(error);
         });
 
-    }
+    };
     return (
         <div>
-            <button className={buttonClasses}
-                onClick={handleButtonClick}
-            >
+            <button className={buttonClasses} onClick={handleButtonClick}>
                 Add To Cart
             </button>
+            <CartLoginModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
         </div>
     );
 };
