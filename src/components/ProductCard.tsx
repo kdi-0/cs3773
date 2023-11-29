@@ -1,8 +1,8 @@
+'use client'
 import Link from "next/link";
 import AddToCart from "./AddToCart";
 
-const ProductCard = (props) => {
-    const { product } = props;
+const ProductCard = ({ product }) => {
     return (
         <div key={product.PRODUCT_ID} className="max-w-xs bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl">
             <Link href={`/products/product/${product.PRODUCT_ID}`} className="flex flex-col items-center">

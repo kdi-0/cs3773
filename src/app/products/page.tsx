@@ -2,8 +2,9 @@ import prisma from '@/src/app/prismadb';
 import Navbar from '../../components/Navbar'
 import ProductCard from '@/src/components/ProductCard';
 import { Product } from '@prisma/client';
+import FilterProductsView from './FilteredProductsView';
 
-function searchParamHandler(searchParams: { [key: string]: string | undefined }, products: Product[]): JSX.Element[] {
+function searchParamHandler(searchParams: { [key: string]: string | undefined }, products: Product[]): Product[] {
     let filteredProducts: Product[];
     if (searchParams.product_name) {
         filteredProducts = products.filter((product) =>
@@ -14,17 +15,13 @@ function searchParamHandler(searchParams: { [key: string]: string | undefined },
             product.PRODUCT_DESCRIPTION.toLowerCase().includes(searchParams.product_description.toLowerCase())
         );
     }
-    return filteredProducts.map((product) => (
-        <ProductCard key={product.PRODUCT_ID} product={product} />
-    ));
+    return filteredProducts;
 }
-function getContent(searchParams: { [key: string]: string | undefined }, products: Product[]) {
+function filterProducts(searchParams: { [key: string]: string | undefined }, products: Product[]) {
     if (searchParams && (searchParams.product_name || searchParams.product_description)) {
         return searchParamHandler(searchParams, products);
     } else {
-        return products.map((product) => (
-            <ProductCard key={product.PRODUCT_ID} product={product} />
-        ));
+        return products;
     }
 }
 
@@ -36,13 +33,11 @@ export default async function Page({
     searchParams: { [key: string]: string | undefined }
 }) {
     const products = await prisma.product.findMany();
-    let pageContent = getContent(searchParams, products);
+    const filtered = filterProducts(searchParams, products);
     return (
         <div>
             <Navbar />
-            <div className='grid grid-cols-2 gap-2 place-content-center'>
-                {pageContent}
-            </div>
+            <FilterProductsView filteredProducts={filtered} allProducts={products} />
         </div>
     );
 };
