@@ -33,10 +33,16 @@ const Navbar = () => {
     }
     return (
       <div className="flex space-x-4">
-        <Link href="/login" className="p-2 bg-gray-100 rounded-xl hover:bg-gray-300 active:bg-gray-500">
+        <Link
+          href="/login"
+          className="p-2 bg-gray-100 rounded-xl hover:bg-gray-300 active:bg-gray-500"
+        >
           Login
         </Link>
-        <Link href="/register" className="p-2 bg-gray-100 rounded-xl hover:bg-gray-300 active:bg-gray-500">
+        <Link
+          href="/register"
+          className="p-2 bg-gray-100 rounded-xl hover:bg-gray-300 active:bg-gray-500"
+        >
           Sign Up
         </Link>
       </div>
@@ -58,21 +64,16 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/shop" className="py-3 px-4 inline-block w-full">
-                  Shop
-                </Link>
-              </li>
-              <li>
-                <Link href="/products" className="py-3 px-4 inline-block w-full">
+                <Link
+                  href="/products"
+                  className="py-3 px-4 inline-block w-full"
+                >
                   Products
                 </Link>
               </li>
               {session?.user && session.user.role === 'admin' && (
                 <li>
-                  <Link
-                    href="/admin"
-                    className="py-3 px-4 inline-block w-full"
-                  >
+                  <Link href="/admin" className="py-3 px-4 inline-block w-full">
                     Admin Dashboard
                   </Link>
                 </li>
@@ -87,33 +88,43 @@ const Navbar = () => {
               className="relative group cursor-pointer"
               onClick={() => setShowNav(!showNav)}
             >
-              <span className="p-2 rounded-xl hover:bg-gray-100 active:bg-gray-300 focus:bg-gray-200">{session.user.name}</span>
-              <div className={`absolute bg-white z-[2] rounded-lg shadow-lg ${showNav ? 'block' : 'hidden'}`}>
+              <span className="p-2 rounded-xl hover:bg-gray-100 active:bg-gray-300 focus:bg-gray-200">
+                {session.user.name}
+              </span>
+              <div
+                className={`absolute bg-white z-[2] rounded-lg shadow-lg ${
+                  showNav ? 'block' : 'hidden'
+                }`}
+              >
                 <SignOut />
               </div>
             </div>
           ) : (
             <SignOut />
           )}
-          {session && session.user && (<Link href="/cart">
-            <div className="p-2 bg-gray-100 rounded-full hover:bg-gray-300">
-              <CiShoppingCart size={20} />
-            </div>
-          </Link>)}
+          {session && session.user && (
+            <Link href="/cart">
+              <div className="p-2 bg-gray-100 rounded-full hover:bg-gray-300">
+                <CiShoppingCart size={20} />
+              </div>
+            </Link>
+          )}
           <span
             onClick={() => setShowNav(!showNav)}
             className="p-[9px] bg-gray-100 rounded-full md:hidden"
           >
             <BsChevronCompactUp
-              className={`transition ease-in duration-150 ${showNav ? 'rotate-180' : '0'
-                }`}
+              className={`transition ease-in duration-150 ${
+                showNav ? 'rotate-180' : '0'
+              }`}
             />
           </span>
         </div>
       </div>
       <div
-        className={`md:hidden ${showNav ? 'pb-4 px-5' : 'h-0 invisible opacity-0'
-          }`}
+        className={`md:hidden ${
+          showNav ? 'pb-4 px-5' : 'h-0 invisible opacity-0'
+        }`}
       >
         <ul className="flex flex-col text-[15px] opacity-75 px-2">
           <li>
