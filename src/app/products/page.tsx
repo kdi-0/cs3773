@@ -1,6 +1,5 @@
 import prisma from '@/src/app/prismadb';
 import Navbar from '../../components/Navbar'
-import ProductCard from '@/src/components/ProductCard';
 import { Product } from '@prisma/client';
 import FilterProductsView from './FilteredProductsView';
 
