@@ -2,14 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { signIn, signOut, useSession } from 'next-auth/react';
-import Navbar from '../../../components/Navbar';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Para from '../../../components/Para';
 import UploadImage from '@/src/components/UploadImage';
 
 const ProductForm = () => {
-  const { data: session } = useSession();
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',

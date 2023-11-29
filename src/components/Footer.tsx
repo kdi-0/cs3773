@@ -55,27 +55,6 @@ function Footer() {
   return (
     <>
       <footer style={footerStyles.footer}>
-        <p>Critter Collectibles</p>
-        <nav>
-          <ul style={footerStyles.navList}>
-            <li style={footerStyles.navItem}>
-              <a href="/">Home</a>
-            </li>
-            <li style={footerStyles.navItem}>
-              <a href="/">About</a>
-            </li>
-            <li style={footerStyles.navItem}>
-              <a href="/">Contact</a>
-            </li>
-            <li style={footerStyles.navItem}>
-              <a href="/shop">Products</a>
-            </li>
-            <li style={footerStyles.navItem}>
-              <a href="/blog">Blog</a>
-            </li>
-            {/* Add more links as needed */}
-          </ul>
-        </nav>
         <p style={footerStyles.copyright}>&copy; 2023 Critter Collectibles</p>
       </footer>
     </>
