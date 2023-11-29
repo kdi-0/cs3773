@@ -18,7 +18,13 @@ function FilterProductsView({ filteredProducts, allProducts }: FilterProductsVie
     if (sortCriteria === 'PRODUCT_PRICE') {
       sortedProducts.sort((a, b) => sortDirectionPrice ? a.PRODUCT_PRICE - b.PRODUCT_PRICE : b.PRODUCT_PRICE - a.PRODUCT_PRICE);
     } else if (sortCriteria === 'PRODUCT_QUANTITY') {
-      sortedProducts.sort((a, b) => sortDirectionQuantity ? a.PRODUCT_QUANTITY - b.PRODUCT_QUANTITY : b.PRODUCT_QUANTITY - a.PRODUCT_QUANTITY);
+      sortedProducts.sort((a, b) => {
+        if (sortDirectionQuantity) {
+          return (a.PRODUCT_QUANTITY === 0 ? -1 : a.PRODUCT_QUANTITY) - (b.PRODUCT_QUANTITY === 0 ? -1 : b.PRODUCT_QUANTITY);
+        } else {
+          return (b.PRODUCT_QUANTITY === 0 ? -1 : b.PRODUCT_QUANTITY) - (a.PRODUCT_QUANTITY === 0 ? -1 : a.PRODUCT_QUANTITY);
+        }
+      });
     }
     return sortedProducts;
   };
