@@ -1,8 +1,8 @@
 import React from 'react';
-import { AiOutlineHeart } from 'react-icons/ai';
 import Link from 'next/link';
 import prisma from '@/src/app/prismadb';
 import AddToCart from './AddToCart';
+import ProductCard from './ProductCard';
 
 type Props = {};
 
@@ -17,33 +17,7 @@ const Item = async (props: Props) => {
     <div>
       <h1 className="py-3 text-xl">Items</h1>
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-20 gap-12 ">
-        {products.map((product) => (
-          <div key={product.PRODUCT_ID}>
-            <Link href={`/products/product/${product.PRODUCT_ID}`}>
-              <div className="relative rounded-lg">
-                <img
-                  src={product.PRODUCT_IMAGE}
-                  className="w-[250px] h-[300px] object-cover object-top rounded-lg"
-                  alt=""
-                />
-              </div>
-              <div className="flex items-center justify-between mt-4">
-                <div>
-                  <h1 className="text-[18px] font-medium max-w-[150px] whitespace-nowrap overflow-hidden">
-                    {product.PRODUCT_NAME}
-                  </h1>
-                </div>
-              </div>
-              <span className="font-medium bg-gray-100 rounded-lg">
-                ${product.PRODUCT_PRICE}.00
-              </span>
-              <div className="font-medium rounded-lg">
-                Quantity in stock: {product.PRODUCT_QUANTITY}
-              </div>
-            </Link>
-            <AddToCart product={product} />
-          </div>
-        ))}
+        {products.map((product) => (<ProductCard key={product} product={product} />))}
       </div>
     </div>
   );

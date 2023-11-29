@@ -7,10 +7,8 @@ import { BsChevronCompactUp } from 'react-icons/bs';
 
 import { BiSearch } from 'react-icons/bi';
 import { useSession, signOut, signIn } from 'next-auth/react';
-// type Props = {};
 const Navbar = () => {
   const { data: session } = useSession();
-  console.log(session?.user);
   const [showNav, setShowNav] = useState<boolean>(false);
 
   const SignOut = () => {
@@ -65,7 +63,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/products?product_name=" className="py-3 px-4 inline-block w-full">
+                <Link href="/products" className="py-3 px-4 inline-block w-full">
                   Products
                 </Link>
               </li>

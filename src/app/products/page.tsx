@@ -1,38 +1,43 @@
-'use client'
-import { useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
 import prisma from '@/src/app/prismadb';
 import Navbar from '../../components/Navbar'
+import ProductCard from '@/src/components/ProductCard';
+import { Product } from '@prisma/client';
+import FilterProductsView from './FilteredProductsView';
 
-
-export default function Page(){
-    try{
-        const searchParams = useSearchParams();
-        const product_name = searchParams.get('product_name');
-        
-
-        if(product_name === '')
-            console.log('no specific product is being searched')
-        else{
-            if (product_name.length > 50)
-                console.error('ERROR: product name is longer than 50 characters')
-            else
-                console.log(`Product being searched: ${product_name}`)
-        }
-        //prisma query based on product_name, if product name is empty '', just query all of the products
-
-
+function searchParamHandler(searchParams: { [key: string]: string | undefined }, products: Product[]): Product[] {
+    let filteredProducts: Product[];
+    if (searchParams.product_name) {
+        filteredProducts = products.filter((product) =>
+            product.PRODUCT_NAME.toLowerCase().includes(searchParams.product_name.toLowerCase())
+        );
+    } else if (searchParams.product_description) {
+        filteredProducts = products.filter((product) =>
+            product.PRODUCT_DESCRIPTION.toLowerCase().includes(searchParams.product_description.toLowerCase())
+        );
     }
-    catch{
-        console.log("ERROR, could not get product_id from URL")
+    return filteredProducts;
+}
+function filterProducts(searchParams: { [key: string]: string | undefined }, products: Product[]) {
+    if (searchParams && (searchParams.product_name || searchParams.product_description)) {
+        return searchParamHandler(searchParams, products);
+    } else {
+        return products;
     }
+}
 
-    
-
-    return(
+export default async function Page({
+    params,
+    searchParams,
+}: {
+    params: { slug: string }
+    searchParams: { [key: string]: string | undefined }
+}) {
+    const products = await prisma.product.findMany();
+    const filtered = filterProducts(searchParams, products);
+    return (
         <div>
             <Navbar />
-            <p>fetch the products</p>
+            <FilterProductsView filteredProducts={filtered} allProducts={products} />
         </div>
-    )
-}
+    );
+};
