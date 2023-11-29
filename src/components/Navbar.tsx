@@ -59,21 +59,21 @@ const Navbar = () => {
           <nav className="max-md:hidden ml-10">
             <ul className="flex items-center opacity-70 text-[15px]">
               <li>
-                <Link href="/" className="py-3 px-4 inline-block w-full hover:bg-gray-300 rounded-xl">
+                <Link href="/" className="py-3 px-4 inline-block w-full hover:bg-gray-300 rounded-xl hover:font-bold">
                   Home
                 </Link>
               </li>
               <li>
                 <Link
                   href="/products"
-                  className="py-3 px-4 inline-block w-full hover:bg-gray-300 rounded-xl"
+                  className="py-3 px-4 inline-block w-full hover:bg-gray-300 rounded-xl hover:font-bold"
                 >
                   Products
                 </Link>
               </li>
               {session?.user && session.user.role === 'admin' && (
                 <li>
-                  <Link href="/admin" className="py-3 px-4 inline-block w-full">
+                  <Link href="/admin" className="py-3 px-4 inline-block w-full hover:bg-gray-300 rounded-xl hover:font-bold">
                     Admin Dashboard
                   </Link>
                 </li>
@@ -88,7 +88,7 @@ const Navbar = () => {
               className="relative group cursor-pointer"
               onClick={() => setShowNav(!showNav)}
             >
-              <span className="p-2 rounded-xl hover:bg-gray-100 active:bg-gray-300 focus:bg-gray-200">
+              <span className="p-2 rounded-xl hover:bg-gray-100 active:bg-gray-300 focus:bg-gray-300">
                 {session.user.name}
               </span>
               <div
