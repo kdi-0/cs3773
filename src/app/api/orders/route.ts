@@ -4,7 +4,7 @@ import prisma from '@/src/app/prismadb';
 export async function GET(request) {
   try {
     const orders = await prisma.order.findMany();
-    
+
     return NextResponse.json({ data: orders });
   } catch (error) {
     console.error('Error fetching orders:', error);
@@ -14,7 +14,8 @@ export async function GET(request) {
 
 export async function PUT(request) {
   try {
-    const { ORDER_ID, /* other fields you want to update */ } = await request.json();
+    const { ORDER_ID /* other fields you want to update */ } =
+      await request.json();
 
     // Validate order ID
     if (!ORDER_ID) {
@@ -26,7 +27,7 @@ export async function PUT(request) {
       where: { ORDER_ID: ORDER_ID },
       data: {
         // Update other fields as needed
-      }
+      },
     });
 
     return NextResponse.json({ data: updatedOrder });

@@ -1,10 +1,8 @@
-import React from 'react'
-import ProductForm from './productform'
+import React from 'react';
+import ProductForm from './productform';
 
 const page = () => {
-  return (
-    <ProductForm/>
-  )
-}
+  return <ProductForm />;
+};
 
-export default page
+export default page;

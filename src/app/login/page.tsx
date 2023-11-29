@@ -1,10 +1,8 @@
-"use client"
-import React from 'react'
+'use client';
+import React from 'react';
 import LoginForm from './loginForm';
 const Login = () => {
-  return (
-    <LoginForm/>
-  )
-}
+  return <LoginForm />;
+};
 
-export default Login
+export default Login;

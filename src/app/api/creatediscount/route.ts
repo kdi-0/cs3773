@@ -1,5 +1,5 @@
-import prisma from "@/src/app/prismadb";
-import { NextResponse } from "next/server";
+import prisma from '@/src/app/prismadb';
+import { NextResponse } from 'next/server';
 
 export async function POST(request) {
   const body = await request.json();
@@ -8,9 +8,12 @@ export async function POST(request) {
     const { code, value } = body;
 
     if (!code || value === undefined) {
-      return NextResponse.json({ message: 'Code or value missing' }, { status: 400 });
+      return NextResponse.json(
+        { message: 'Code or value missing' },
+        { status: 400 }
+      );
     }
-    
+
     const discountCode = await prisma.discount.create({
       data: {
         DISCOUNT_CODE: code,
@@ -21,6 +24,9 @@ export async function POST(request) {
     return NextResponse.json(discountCode);
   } catch (error) {
     console.error('Error creating discount code:', error);
-    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }

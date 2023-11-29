@@ -13,7 +13,8 @@ export async function GET() {
 
 export async function PUT(request) {
   try {
-    const { USER_ID, USER_ROLE, USER_NAME, USER_EMAIL, USER_PASSWORD } = await request.json();
+    const { USER_ID, USER_ROLE, USER_NAME, USER_EMAIL, USER_PASSWORD } =
+      await request.json();
 
     // Validate user ID
     if (!USER_ID) {
@@ -28,7 +29,7 @@ export async function PUT(request) {
         USER_NAME,
         USER_EMAIL,
         USER_PASSWORD,
-      } 
+      },
     });
 
     return NextResponse.json({ data: updatedUser });

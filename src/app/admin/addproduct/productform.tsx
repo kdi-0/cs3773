@@ -5,7 +5,7 @@ import axios from 'axios';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Navbar from '../../../components/Navbar';
 import { useRouter } from 'next/navigation';
-import Para from "../../../components/Para"
+import Para from '../../../components/Para';
 import UploadImage from '@/src/components/UploadImage';
 
 const ProductForm = () => {
@@ -21,56 +21,61 @@ const ProductForm = () => {
   });
 
   useEffect(() => {
-    console.log(formData.images)
-    console.log(formData)
-  }, [formData])
+    console.log(formData.images);
+    console.log(formData);
+  }, [formData]);
 
-
-  const [info, updateInfo] = useState<any>()
-  const [imageUrls, setImageUrls] = useState<string[]>([])
-  const [description, setDescription] = useState<string>("")
+  const [info, updateInfo] = useState<any>();
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [description, setDescription] = useState<string>('');
   const postData = async () => {
-    handleImageChange()
+    handleImageChange();
     try {
-      const response = await axios.post('/api/addproduct', formData)
-      console.log(response)
-      router.push('/')
+      const response = await axios.post('/api/addproduct', formData);
+      console.log(response);
+      router.push('/');
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   const handleImageChange = () => {
-    const stringImages = JSON.stringify(imageUrls)
+    const stringImages = JSON.stringify(imageUrls);
     setFormData({
       ...formData,
       images: stringImages,
       description: description,
-    })
-  }
+    });
+  };
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.name === "price" ? parseInt(e.target.value) : parseInt(e.target.value)
-    const quantity = e.target.name === "inventory" ? parseInt(e.target.value) : parseInt(e.target.value)
+    const value =
+      e.target.name === 'price'
+        ? parseInt(e.target.value)
+        : parseInt(e.target.value);
+    const quantity =
+      e.target.name === 'inventory'
+        ? parseInt(e.target.value)
+        : parseInt(e.target.value);
     setFormData({
       ...formData,
       [e.target.name]: value,
       [e.target.name]: quantity,
-    })
-  }
+    });
+  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
-    })
-  }
+      [name]: value,
+    });
+  };
 
   useEffect(() => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       description: description,
       images: imageUrls.toString(),
-    }))
-  }, [imageUrls])
+    }));
+  }, [imageUrls]);
 
   useEffect(() => {
     setFormData((prevFormData) => ({
@@ -133,11 +138,29 @@ const ProductForm = () => {
             />
           </div>
         </div>
-        <label htmlFor="" className="mt-10 inline-block font-medium">Description about the product</label>
-        <Para setDescription={setDescription} description={formData.description} />
-        <label htmlFor="" className="mt-10 inline-block font-medium">Upload images</label>
-        <UploadImage info={info} updateInfo={updateInfo} imageUrls={imageUrls} setImageUrls={setImageUrls} handleImageChange={handleImageChange} />
-        <button onClick={postData} className="text-white mt-10 border-[1px] bg-purple-500 rounded-lg px-4 p-2">Submit</button>
+        <label htmlFor="" className="mt-10 inline-block font-medium">
+          Description about the product
+        </label>
+        <Para
+          setDescription={setDescription}
+          description={formData.description}
+        />
+        <label htmlFor="" className="mt-10 inline-block font-medium">
+          Upload images
+        </label>
+        <UploadImage
+          info={info}
+          updateInfo={updateInfo}
+          imageUrls={imageUrls}
+          setImageUrls={setImageUrls}
+          handleImageChange={handleImageChange}
+        />
+        <button
+          onClick={postData}
+          className="text-white mt-10 border-[1px] bg-purple-500 rounded-lg px-4 p-2"
+        >
+          Submit
+        </button>
       </div>
     </div>
   );

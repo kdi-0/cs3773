@@ -13,9 +13,8 @@ const LoginForm = () => {
     email: '',
     password: '',
   });
-  
+
   const Login = async () => {
-    
     // const data = {
     //   email: user.email,
     //   password: user.password,
@@ -34,22 +33,21 @@ const LoginForm = () => {
     //   console.log(error);
     // }
     try {
-      const res = await signIn('credentials',{
-        email:user.email,
-        password:user.password,
-        redirect:true,
-        callbackUrl:"/"
-      })
+      const res = await signIn('credentials', {
+        email: user.email,
+        password: user.password,
+        redirect: true,
+        callbackUrl: '/',
+      });
 
-      if (res.error){
-        console.log("signIn error")
+      if (res.error) {
+        console.log('signIn error');
       }
 
-      router.replace("/")
-    } catch{
-        console.log('Error while signing in')
+      router.replace('/');
+    } catch {
+      console.log('Error while signing in');
     }
-    
   };
 
   return (
