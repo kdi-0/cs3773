@@ -8,7 +8,6 @@ const AddToCart = (props) => {
     const { data: session } = useSession();
     let { product, intentQuantity } = props;
 
-    const imageUrl = product.PRODUCT_IMAGE.split('","')[0].slice(2, -2);
     const isOutOfStock = product.PRODUCT_QUANTITY === 0;
     const buttonClasses = `w-full p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-green-300 ${isOutOfStock ? 'bg-gray-500 hover:bg-gray-500 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'}`;
     const handleButtonClick = () => {
@@ -20,7 +19,7 @@ const AddToCart = (props) => {
             PRODUCT_NAME: product.PRODUCT_NAME,
             quantity: quantityToAdd,
             PRODUCT_PRICE: product.PRODUCT_PRICE,
-            PRODUCT_IMAGE: imageUrl,
+            PRODUCT_IMAGE: product.PRODUCT_IMAGE,
         }, {
             headers: {
                 'Content-Type': 'application/json'
