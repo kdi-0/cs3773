@@ -10,12 +10,11 @@ const ProductDetails = ({ product }) => {
     const safeQuantity = Math.min(Math.max(parsedQuantity, 1), product.PRODUCT_QUANTITY);
     setQuantity(safeQuantity);;
   }
-  const imageUrl = product.PRODUCT_IMAGE.split('","')[0].slice(2, -2);
   return (
     <div className="container mx-auto my-8 p-5">
       <div className="flex flex-wrap -mx-2">
         <div className="w-full md:w-1/2 lg:w-2/5 p-2">
-          <img src={imageUrl} alt={product.PRODUCT_NAME} className="w-full object-contain h-48 sm:h-72" />
+          <img src={product.PRODUCT_IMAGE} alt={product.PRODUCT_NAME} className="w-full object-contain h-48 sm:h-72" />
         </div>
         <div className="w-full md:w-1/2 lg:w-3/5 flex flex-col p-2">
           <div className="bg-green-100 p-5 mb-4">

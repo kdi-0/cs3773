@@ -22,7 +22,7 @@ const Item = async (props: Props) => {
             <Link href={`/products/product/${product.PRODUCT_ID}`}>
               <div className="relative rounded-lg">
                 <img
-                  src={product.PRODUCT_IMAGE.split('","')[0].slice(2, -2)}
+                  src={product.PRODUCT_IMAGE}
                   className="w-[250px] h-[300px] object-cover object-top rounded-lg"
                   alt=""
                 />
@@ -37,6 +37,9 @@ const Item = async (props: Props) => {
               <span className="font-medium bg-gray-100 rounded-lg">
                 ${product.PRODUCT_PRICE}.00
               </span>
+              <div className="font-medium rounded-lg">
+                Quantity in stock: {product.PRODUCT_QUANTITY}
+              </div>
             </Link>
             <AddToCart product={product} />
           </div>
