@@ -9,7 +9,6 @@ import { BiSearch } from 'react-icons/bi';
 import { useSession, signOut, signIn } from 'next-auth/react';
 const Navbar = () => {
   const { data: session } = useSession();
-  console.log(session?.user);
   const [showNav, setShowNav] = useState<boolean>(false);
 
   const SignOut = () => {
