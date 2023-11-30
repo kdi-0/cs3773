@@ -1,3 +1,3 @@
 export default function Account() {
-    return (<h1>hello world</h1>);
+  return <h1>hello world</h1>;
 }

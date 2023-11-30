@@ -1,11 +1,9 @@
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcrypt';
-import axios from 'axios';
 import prisma from '@/src/app/prismadb';
 import NextAuth from 'next-auth';
-import { User } from '@prisma/client';
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -67,15 +65,15 @@ export const authOptions: NextAuthOptions = {
     },
     jwt: async ({ user, token }) => {
       if (user) {
-        token.ROLE = user.role
+        token.ROLE = user.role;
       }
-      return token
-    }
+      return token;
+    },
   },
   session: {
     strategy: 'jwt',
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NODE_ENV === 'development' ? process.env.NEXTAUTH_SECRET : process.env.SECRET,
   debug: process.env.NODE_ENV === 'development',
 };
 

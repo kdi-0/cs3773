@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 
-import axios from 'axios';
 
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -29,7 +28,7 @@ const LoginForm = () => {
         setErrorMessage(res.error);
       } else {
         // Redirect on successful login
-        router.replace("/");
+        router.replace('/');
       }
     } catch (error) {
       console.log('Error while signing in');
@@ -63,7 +62,9 @@ const LoginForm = () => {
           placeholder="password"
           onChange={(e) => setUser({ ...user, password: e.target.value })}
         />
-        {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
+        {errorMessage && (
+          <div className="text-red-500 mb-4">{errorMessage}</div>
+        )}
         <button
           onClick={Login}
           className="p-2 border bg-purple-600 text-white border-gray-300 mt-2 mb-4 focus:outline-none focus:border-gray-600"

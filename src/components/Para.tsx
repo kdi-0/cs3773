@@ -6,13 +6,13 @@ interface ParaProps {
 }
 
 const Para: React.FC<ParaProps> = ({ description, setDescription }) => {
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setDescription(e.target.value);
   };
 
-  useEffect(() => {
-    
-  }, [description]);
+  useEffect(() => {}, [description]);
 
   return (
     <div className="mx-aut border-[1px] mt-4 rounded-xl focus:border-blue-600 focus:border-2 outline-none">

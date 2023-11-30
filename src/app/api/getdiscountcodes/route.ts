@@ -1,8 +1,7 @@
-
 import { NextResponse } from 'next/server';
 import prisma from '@/src/app/prismadb';
 
-export async function GET(request) {
+export async function GET() {
   try {
     const discountCodes = await prisma.discount.findMany();
     return NextResponse.json({ data: discountCodes });

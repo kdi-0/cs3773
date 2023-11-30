@@ -1,13 +1,12 @@
 import bcrypt from 'bcrypt';
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
 import { logger } from '@/logger';
 import prisma from '@/src/app/prismadb';
 
 export async function POST(request: Request) {
   const logging = logger();
   logging.info(`POST /api/login`);
-  
+
   try {
     const body = await request.json();
     const { email, password } = body;
@@ -23,7 +22,7 @@ export async function POST(request: Request) {
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.USER_PASSWORD);
-    
+
     if (!isPasswordValid) {
       throw new Error('Invalid password');
     }
