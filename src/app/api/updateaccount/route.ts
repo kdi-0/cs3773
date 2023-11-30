@@ -1,6 +1,6 @@
 import prisma from '@/src/app/prismadb';
 
-export default async function PUT(req, res) {
+export async function PUT(req, res) {
   const userId = req.query.id; // Assuming the ID is part of the URL path
   const newCredentials = req.body;
 
