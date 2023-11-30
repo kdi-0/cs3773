@@ -30,9 +30,10 @@ export async function POST(request: Request) {
       if (cartItems[i].PRODUCT_ID === requestBody.PRODUCT_ID) {
         try {
           indexToRemove = i;
+          console.log(userCart);
           newCartCost =
             requestBody.oldCartCost -
-            userCart[i].PRODUCT_QUANTITY * userCart[i].PRODUCT_PRICE;
+            (userCart[i] as any).PRODUCT_QUANTITY * (userCart[i] as any).PRODUCT_PRICE;
           break;
         } catch {
           console.log(
