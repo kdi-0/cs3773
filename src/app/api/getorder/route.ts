@@ -6,7 +6,7 @@ export async function GET(request) {
   const { userId } = request.query;
 
   if (!userId) {
-    return NextResponse.error();
+    return NextResponse.json({});
   }
 
   const userIdNumber = parseInt(userId, 10);
