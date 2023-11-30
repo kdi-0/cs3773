@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   try {
     const userDetails: UserSession = await request.json();
 
-    const userCart = await kv.get(`${userDetails.email}:cart`);
+    const userCart: any = await kv.get(`${userDetails.email}:cart`);
     console.log(userCart);
 
     if (userCart) {
