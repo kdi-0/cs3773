@@ -142,35 +142,40 @@ const OrderHistory = () => {
         {showCurrentOrders ? 'Current Orders' : 'Order History'}
       </h2>
 
+      {/* Search input */}
+      <input
+        type="text"
+        value={searchInput}
+        onChange={handleSearchChange}
+        placeholder="Search by User Name"
+        className="border rounded px-2 py-1 mb-4"
+      />
+
       <div className="flex mb-4 space-x-4">
         <button
-          className={`text-blue-500 ${
-            sortBy === 'date' && sortOrder === 'asc' ? 'font-bold' : ''
-          }`}
+          className={`text-blue-500 ${sortBy === 'date' && sortOrder === 'asc' ? 'font-bold' : ''
+            }`}
           onClick={sortByDateAsc}
         >
           Sort by Date Asc
         </button>
         <button
-          className={`text-blue-500 ${
-            sortBy === 'date' && sortOrder === 'desc' ? 'font-bold' : ''
-          }`}
+          className={`text-blue-500 ${sortBy === 'date' && sortOrder === 'desc' ? 'font-bold' : ''
+            }`}
           onClick={sortByDateDesc}
         >
           Sort by Date Desc
         </button>
         <button
-          className={`text-blue-500 ${
-            sortBy === 'customer' ? 'font-bold' : ''
-          }`}
+          className={`text-blue-500 ${sortBy === 'customer' ? 'font-bold' : ''
+            }`}
           onClick={sortByCustomer}
         >
           Sort by Customer
         </button>
         <button
-          className={`text-blue-500 ${
-            sortBy === 'orderSize' ? 'font-bold' : ''
-          }`}
+          className={`text-blue-500 ${sortBy === 'orderSize' ? 'font-bold' : ''
+            }`}
           onClick={sortByOrderSize}
         >
           Sort by Order Size
@@ -182,57 +187,50 @@ const OrderHistory = () => {
           Sort by Order ID
         </button>
         <button
-          className={`text-blue-500 ${
-            sortBy === 'shippingAddress' ? 'font-bold' : ''
-          }`}
+          className={`text-blue-500 ${sortBy === 'shippingAddress' ? 'font-bold' : ''
+            }`}
           onClick={sortByShippingAddress}
         >
           Sort by Shipping Address
         </button>
         <button
-          className={`text-blue-500 ${
-            sortBy === 'customerName' ? 'font-bold' : ''
-          }`}
+          className={`text-blue-500 ${sortBy === 'customerName' ? 'font-bold' : ''
+            }`}
           onClick={sortByCustomerName}
         >
           Sort by Customer Name
         </button>
         <button
-          className={`text-blue-500 ${
-            sortBy === 'phoneNumber' ? 'font-bold' : ''
-          }`}
+          className={`text-blue-500 ${sortBy === 'phoneNumber' ? 'font-bold' : ''
+            }`}
           onClick={sortByPhoneNumber}
         >
           Sort by Phone Number
         </button>
         <button
-          className={`text-blue-500 ${
-            sortBy === 'productIDs' ? 'font-bold' : ''
-          }`}
+          className={`text-blue-500 ${sortBy === 'productIDs' ? 'font-bold' : ''
+            }`}
           onClick={sortByProductIDs}
         >
           Sort by Product IDs
         </button>
         <button
-          className={`text-blue-500 ${
-            sortBy === 'productQuantities' ? 'font-bold' : ''
-          }`}
+          className={`text-blue-500 ${sortBy === 'productQuantities' ? 'font-bold' : ''
+            }`}
           onClick={sortByProductQuantities}
         >
           Sort by Product Quantities
         </button>
         <button
-          className={`text-blue-500 ${
-            sortBy === 'totalPrice' ? 'font-bold' : ''
-          }`}
+          className={`text-blue-500 ${sortBy === 'totalPrice' ? 'font-bold' : ''
+            }`}
           onClick={sortByTotalPrice}
         >
           Sort by Total Price
         </button>
         <button
-          className={`text-blue-500 ${
-            sortBy === 'userName' ? 'font-bold' : ''
-          }`}
+          className={`text-blue-500 ${sortBy === 'userName' ? 'font-bold' : ''
+            }`}
           onClick={sortByUserName}
         >
           Sort by User Name
@@ -252,73 +250,64 @@ const OrderHistory = () => {
         <thead>
           <tr>
             <th
-              className={`border border-gray-300 px-4 py-2 ${
-                sortBy === 'orderID' ? 'bg-gray-200' : ''
-              }`}
+              className={`border border-gray-300 px-4 py-2 ${sortBy === 'orderID' ? 'bg-gray-200' : ''
+                }`}
               onClick={sortByOrderID}
             >
               Order ID
             </th>
             <th
-              className={`border border-gray-300 px-4 py-2 ${
-                sortBy === 'date' ? 'bg-gray-200' : ''
-              }`}
+              className={`border border-gray-300 px-4 py-2 ${sortBy === 'date' ? 'bg-gray-200' : ''
+                }`}
               onClick={sortByDateAsc}
             >
               Date
             </th>
             <th
-              className={`border border-gray-300 px-4 py-2 ${
-                sortBy === 'shippingAddress' ? 'bg-gray-200' : ''
-              }`}
+              className={`border border-gray-300 px-4 py-2 ${sortBy === 'shippingAddress' ? 'bg-gray-200' : ''
+                }`}
               onClick={sortByShippingAddress}
             >
               Shipping Address
             </th>
             <th
-              className={`border border-gray-300 px-4 py-2 ${
-                sortBy === 'customerName' ? 'bg-gray-200' : ''
-              }`}
+              className={`border border-gray-300 px-4 py-2 ${sortBy === 'customerName' ? 'bg-gray-200' : ''
+                }`}
               onClick={sortByCustomerName}
             >
               Customer Name
             </th>
             <th
-              className={`border border-gray-300 px-4 py-2 ${
-                sortBy === 'phoneNumber' ? 'bg-gray-200' : ''
-              }`}
+              className={`border border-gray-300 px-4 py-2 ${sortBy === 'phoneNumber' ? 'bg-gray-200' : ''
+                }`}
               onClick={sortByPhoneNumber}
             >
               Phone Number
             </th>
             <th
-              className={`border border-gray-300 px-4 py-2 ${
-                sortBy === 'productIDs' ? 'bg-gray-200' : ''
-              }`}
+              className={`border border-gray-300 px-4 py-2 ${sortBy === 'productIDs' ? 'bg-gray-200' : ''
+                }`}
               onClick={sortByProductIDs}
             >
               Product IDs
             </th>
             <th
-              className={`border border-gray-300 px-4 py-2 ${
-                sortBy === 'productQuantities' ? 'bg-gray-200' : ''
-              }`}
+              className={`border border-gray-300 px-4 py-2 ${sortBy === 'productQuantities' ? 'bg-gray-200' : ''
+                }`}
               onClick={sortByProductQuantities}
             >
               Product Quantities
             </th>
             <th
-              className={`border border-gray-300 px-4 py-2 ${
-                sortBy === 'totalPrice' ? 'bg-gray-200' : ''
-              }`}
+              className={`border border-gray-300 px-4 py-2 ${sortBy === 'totalPrice' ? 'bg-gray-200' : ''
+                }`}
               onClick={sortByTotalPrice}
             >
               Total Price
             </th>
             <th
-              className={`border border-gray-300 px-4 py-2 ${
-                sortBy === 'userName' ? 'bg-gray-200' : ''
-              }`}
+              className={`border border-gray-300 px-4 py-2 ${sortBy === 'userName' ? 'bg-gray-200' : ''
+                }`}
               onClick={sortByUserName}
             >
               User Name
