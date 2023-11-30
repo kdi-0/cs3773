@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/src/app/prismadb';
 
 export async function GET(request) {
+  if (request.query === undefined) request.query = 2;
   const { userId } = request.query;
 
   if (!userId) {
