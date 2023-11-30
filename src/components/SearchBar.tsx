@@ -9,7 +9,7 @@ const SearchBar = () => {
   const [searchValue, setSearchValue] = useState('');
 
   function handleSearch() {
-    router.push(`/products?${searchParam}=${encodeURIComponent(searchValue)}`);
+    router.push(`/products?product_search=${encodeURIComponent(searchValue)}`);
   }
 
   function handleKeyPress(event) {
@@ -18,20 +18,9 @@ const SearchBar = () => {
     }
   }
 
-  function handleDropdownChange(event) {
-    setSearchParam(event.target.value);
-  }
-
   return (
     <div>
       <div className="flex items-center bg-gray-100 p-2 rounded-full max-md:hidden flex-grow">
-        <select
-          onChange={handleDropdownChange}
-          className="outline-none bg-transparent"
-        >
-          <option value="product_name">name</option>
-          <option value="product_description">description</option>
-        </select>
         <button onClick={handleSearch}>
           <BiSearch size={20} className="opacity-50" />
         </button>

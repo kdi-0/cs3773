@@ -7,30 +7,22 @@ function searchParamHandler(
   searchParams: { [key: string]: string | undefined },
   products: Product[]
 ): Product[] {
-  let filteredProducts: Product[];
-  if (searchParams.product_name) {
-    filteredProducts = products.filter((product) =>
+  return products.filter(
+    (product) =>
       product.PRODUCT_NAME.toLowerCase().includes(
-        searchParams.product_name.toLowerCase()
-      )
-    );
-  } else if (searchParams.product_description) {
-    filteredProducts = products.filter((product) =>
+        searchParams.product_search.toLowerCase()
+      ) ||
       product.PRODUCT_DESCRIPTION.toLowerCase().includes(
-        searchParams.product_description.toLowerCase()
+        searchParams.product_search.toLowerCase()
       )
-    );
-  }
-  return filteredProducts;
+  );
 }
+
 function filterProducts(
   searchParams: { [key: string]: string | undefined },
   products: Product[]
 ) {
-  if (
-    searchParams &&
-    (searchParams.product_name || searchParams.product_description)
-  ) {
+  if (searchParams && searchParams.product_search) {
     return searchParamHandler(searchParams, products);
   } else {
     return products;

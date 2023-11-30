@@ -87,7 +87,8 @@ function FilterProductsView({
             : 'Descending\u25BC'}
           ]
         </button>
-        <Link href={"/products"}
+        <Link
+          href={'/products'}
           className="p-2 bg-gray-100 rounded-full hover:bg-gray-300"
         >
           Clear Filters

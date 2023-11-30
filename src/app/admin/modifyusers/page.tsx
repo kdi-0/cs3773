@@ -244,10 +244,11 @@ const UserTable = () => {
             <button
               key={index + 1}
               onClick={() => paginate(index + 1)}
-              className={`px-3 py-1 mx-1 border ${currentPage === index + 1
+              className={`px-3 py-1 mx-1 border ${
+                currentPage === index + 1
                   ? 'bg-gray-500 text-white'
                   : 'bg-white text-gray-500'
-                }`}
+              }`}
             >
               {index + 1}
             </button>

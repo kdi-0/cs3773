@@ -33,7 +33,8 @@ export async function POST(request: Request) {
           console.log(userCart);
           newCartCost =
             requestBody.oldCartCost -
-            (userCart[i] as any).PRODUCT_QUANTITY * (userCart[i] as any).PRODUCT_PRICE;
+            (userCart[i] as any).PRODUCT_QUANTITY *
+              (userCart[i] as any).PRODUCT_PRICE;
           break;
         } catch {
           console.log(
