@@ -12,13 +12,12 @@ const RegisterForm = () => {
   });
 
   const router = useRouter();
-  
+
   const validateInput = (input: string, regex: RegExp) => {
     return regex.test(input);
   };
 
   const Register = async () => {
-    
     const emailRegex = /^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
     const nameRegex = /^[a-zA-Z0-9_]{4,30}$/;
     const passwordRegex = /^[a-zA-Z0-9_]{4,16}$/;
@@ -34,7 +33,9 @@ const RegisterForm = () => {
     }
 
     if (!validateInput(user.password, passwordRegex)) {
-      alert('Invalid password. Password should be between 4 and 16 characters.');
+      alert(
+        'Invalid password. Password should be between 4 and 16 characters.'
+      );
       return;
     }
 

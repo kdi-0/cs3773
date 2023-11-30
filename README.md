@@ -7,6 +7,7 @@ Install dependencies in package.json:
 **npm install**
 
 Prisma
+
 ```
 -npx prisma generate  : Create Prisma client
 -npx prisma migrate dev  : apply changes made to prisma schema

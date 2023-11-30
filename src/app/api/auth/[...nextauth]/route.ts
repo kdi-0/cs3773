@@ -67,10 +67,10 @@ export const authOptions: NextAuthOptions = {
     },
     jwt: async ({ user, token }) => {
       if (user) {
-        token.ROLE = user.role
+        token.ROLE = user.role;
       }
-      return token
-    }
+      return token;
+    },
   },
   session: {
     strategy: 'jwt',

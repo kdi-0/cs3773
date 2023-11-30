@@ -1,12 +1,12 @@
 import bcrypt from 'bcrypt';
 import { NextResponse } from 'next/server';
-import prisma from "../../prismadb"
-import { logger } from "@/logger";
+import prisma from '../../prismadb';
+import { logger } from '@/logger';
 
 export async function POST(request: Request) {
   const logging = logger();
   logging.info(`POST /api/register`);
-  
+
   try {
     const body = await request.json();
     const { name, email, password } = await body;
@@ -16,8 +16,8 @@ export async function POST(request: Request) {
       data: {
         USER_NAME: name,
         USER_EMAIL: email,
-        USER_PASSWORD: hashedPassword
-      }
+        USER_PASSWORD: hashedPassword,
+      },
     });
     console.log(`Created: ${user}`);
     return new NextResponse();
