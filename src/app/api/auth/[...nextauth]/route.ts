@@ -73,7 +73,7 @@ const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NODE_ENV === 'development' ? process.env.NEXTAUTH_SECRET : process.env.SECRET,
   debug: process.env.NODE_ENV === 'development',
 };
 
