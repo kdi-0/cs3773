@@ -1,8 +1,7 @@
 'use client';
 import GetCartItems from '@/src/components/GetCartItems';
 import Navbar from '../../components/Navbar';
-import { useSession, signOut, signIn } from 'next-auth/react';
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense } from 'react';
 
 // pages are server sided components (Ramin reference). Any useState, useEffect, and storage is client sided.
 

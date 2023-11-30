@@ -7,19 +7,6 @@ export async function POST(request) {
   try {
     const { name, description, category, images, price, quantity } = body;
 
-    if (
-      !name ||
-      !description ||
-      !category || // Add a validation check for category
-      !images ||
-      price === undefined ||
-      quantity === undefined
-    ) {
-    }
-
-    if (typeof category !== 'number' || !Number.isInteger(category)) {
-    }
-
     const product = await prisma.product.create({
       data: {
         PRODUCT_NAME: name,

@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
 import { logger } from '@/logger';
 import prisma from '@/src/app/prismadb';
 

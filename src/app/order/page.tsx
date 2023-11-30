@@ -2,25 +2,8 @@
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-// const create_order = async(product_orders) => {
-//     try{
-//         await prisma.order.create({
-//           data: {
-//             USER_ID: 1,
-//             ORDER_DATE: new Date(),
-//             product_orders: product_orders,
-//             ORDER_TOTAL_PRICE: 33.45,
-//             ORDER_SHIPPING_ADDRESS: '3333 street, state, zip',
-//             IS_CURRENT_ORDER: true
-//           },
-//         })
-//     }
-//     catch{
-//       alert("ERROR creating order")
-//     }
-// }
 
-export default function Page(props) {
+export default function Page() {
   const router = useRouter();
   // get user's cart items, store user cart items in a separate table called cart. Each row could be a user id then a list of json objects (each json object has a product id and quantity), or each row represents a product (product id) and quantity with user_id as one of the primary keys.
   try {
