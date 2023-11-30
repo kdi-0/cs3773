@@ -59,21 +59,21 @@ const Navbar = () => {
           <nav className="max-md:hidden ml-10">
             <ul className="flex items-center opacity-70 text-[15px]">
               <li>
-                <Link href="/" className="py-3 px-4 inline-block w-full">
+                <Link href="/" className="py-3 px-4 inline-block w-full hover:bg-gray-300 rounded-xl hover:font-bold">
                   Home
                 </Link>
               </li>
               <li>
                 <Link
                   href="/products"
-                  className="py-3 px-4 inline-block w-full"
+                  className="py-3 px-4 inline-block w-full hover:bg-gray-300 rounded-xl hover:font-bold"
                 >
                   Products
                 </Link>
               </li>
               {session?.user && session.user.role === 'admin' && (
                 <li>
-                  <Link href="/admin" className="py-3 px-4 inline-block w-full">
+                  <Link href="/admin" className="py-3 px-4 inline-block w-full hover:bg-gray-300 rounded-xl hover:font-bold">
                     Admin Dashboard
                   </Link>
                 </li>
@@ -88,13 +88,12 @@ const Navbar = () => {
               className="relative group cursor-pointer"
               onClick={() => setShowNav(!showNav)}
             >
-              <span className="p-2 rounded-xl hover:bg-gray-100 active:bg-gray-300 focus:bg-gray-200">
+              <span className="p-2 rounded-xl hover:bg-gray-100 active:bg-gray-300 focus:bg-gray-300">
                 {session.user.name}
               </span>
               <div
-                className={`absolute bg-white z-[2] rounded-lg shadow-lg ${
-                  showNav ? 'block' : 'hidden'
-                }`}
+                className={`absolute bg-white z-[2] rounded-lg shadow-lg ${showNav ? 'block' : 'hidden'
+                  }`}
               >
                 <SignOut />
               </div>
@@ -114,17 +113,15 @@ const Navbar = () => {
             className="p-[9px] bg-gray-100 rounded-full md:hidden"
           >
             <BsChevronCompactUp
-              className={`transition ease-in duration-150 ${
-                showNav ? 'rotate-180' : '0'
-              }`}
+              className={`transition ease-in duration-150 ${showNav ? 'rotate-180' : '0'
+                }`}
             />
           </span>
         </div>
       </div>
       <div
-        className={`md:hidden ${
-          showNav ? 'pb-4 px-5' : 'h-0 invisible opacity-0'
-        }`}
+        className={`md:hidden ${showNav ? 'pb-4 px-5' : 'h-0 invisible opacity-0'
+          }`}
       >
         <ul className="flex flex-col text-[15px] opacity-75 px-2">
           <li>
