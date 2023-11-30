@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import ProductCard from '@/src/components/ProductCard';
 import { Product } from '@prisma/client';
+import Link from 'next/link';
 
 interface FilterProductsViewProps {
   filteredProducts: Product[];
@@ -86,12 +87,11 @@ function FilterProductsView({
             : 'Descending\u25BC'}
           ]
         </button>
-        <button
+        <Link href={"/products"}
           className="p-2 bg-gray-100 rounded-full hover:bg-gray-300"
-          onClick={handleClearFilters}
         >
           Clear Filters
-        </button>
+        </Link>
       </div>
       <div className="flex flex-wrap gap-5 place-content-center">
         {displayedProducts.map((product) => (
