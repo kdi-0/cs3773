@@ -44,7 +44,7 @@ export const authOptions: NextAuthOptions = {
         if (!isCorrectedPassword) {
           throw new Error('Invalid Credentials');
         }
-     
+
         const authorizedUser = {
           email: user.USER_EMAIL,
           name: user.USER_NAME,

@@ -1,10 +1,5 @@
 import Navbar from "../components/Navbar";
-import Items from "../components/Items";
-import { getCurrentUser } from "../lib/session"
 import Footer from "../components/Footer";
-import CategoryNavbar from "../components/CategoryNavbar";
-import Advertisement from "../components/Advertisement";
-import Home from "../components/Home";
 import WelcomeHeader from "../components/WelcomeHeader";
 import FeaturedProducts from "../components/FeaturedProducts";
 import AboutUs from "../components/AboutUs";

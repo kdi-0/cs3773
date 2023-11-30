@@ -13,43 +13,28 @@ const LoginForm = () => {
     email: '',
     password: '',
   });
-  
+
+  const [errorMessage, setErrorMessage] = useState('');
+
   const Login = async () => {
-    
-    // const data = {
-    //   email: user.email,
-    //   password: user.password,
-    // };
-
-    // try {
-    //   const response = await axios.post('/api/login', data);
-    //   console.log(response);
-
-    //   if (response.status === 200) {
-    //     router.push('/dashboard');
-    //   } else {
-    //     console.log('Login failed');
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
     try {
-      const res = await signIn('credentials',{
-        email:user.email,
-        password:user.password,
-        redirect:true,
-        callbackUrl:"/"
-      })
+      const res = await signIn('credentials', {
+        email: user.email,
+        password: user.password,
+        redirect: false, // Set redirect to false to handle it manually
+      });
 
-      if (res.error){
-        console.log("signIn error")
+      if (res.error) {
+        // Update the error message in the state
+        setErrorMessage(res.error);
+      } else {
+        // Redirect on successful login
+        router.replace("/");
       }
-
-      router.replace("/")
-    } catch{
-        console.log('Error while signing in')
+    } catch (error) {
+      console.log('Error while signing in');
+      setErrorMessage('An error occurred while signing in.');
     }
-    
   };
 
   return (
@@ -71,13 +56,14 @@ const LoginForm = () => {
           Password
         </label>
         <input
-          type="text"
+          type="password"
           className="p-2 border-gray-300 border-[1px] rounded-lg w-[300px] mb-4 focus:outline-none focus:border-gray-600 text-black"
           id="password"
           value={user.password}
           placeholder="password"
           onChange={(e) => setUser({ ...user, password: e.target.value })}
         />
+        {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
         <button
           onClick={Login}
           className="p-2 border bg-purple-600 text-white border-gray-300 mt-2 mb-4 focus:outline-none focus:border-gray-600"
